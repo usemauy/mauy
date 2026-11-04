@@ -1,328 +1,137 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>MAUY</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel | MAUY</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{font-family:Poppins,system-ui,sans-serif}.on{background:#59283B;color:#F5F1EB}</style>
 </head>
 <body class="bg-[#F5F1EB] text-[#29292B]">
-  <div id="app"></div>
+<div class="flex min-h-screen flex-col md:flex-row">
+  <nav class="md:w-56 bg-white border-b md:border-r border-black/10 p-4 flex md:flex-col gap-2 overflow-x-auto">
+    <div class="text-xl tracking-[.25em] text-[#59283B] font-medium md:mb-4 pr-4">MAUY<span class="block text-[10px] tracking-widest text-[#C5A99A]">PAINEL</span></div>
+    <button data-tab="dash" class="tab text-left rounded-xl px-3 py-2 text-sm whitespace-nowrap">Visão geral</button>
+    <button data-tab="prod" class="tab text-left rounded-xl px-3 py-2 text-sm whitespace-nowrap">Produtos</button>
+    <button data-tab="ped" class="tab text-left rounded-xl px-3 py-2 text-sm whitespace-nowrap">Pedidos</button>
+    <button data-tab="cup" class="tab text-left rounded-xl px-3 py-2 text-sm whitespace-nowrap">Cupons</button>
+    <button data-tab="cfg" class="tab text-left rounded-xl px-3 py-2 text-sm whitespace-nowrap">Dados / Exportar</button>
+    <a href="../" class="md:mt-auto text-sm text-[#59283B] underline px-3 py-2 whitespace-nowrap">← Ver loja</a>
+  </nav>
+  <main class="flex-1 p-4 sm:p-8"><div id="view"></div></main>
+</div>
 
-  <script>
-    const state = { site: null, products: [], cart: [], filter: 'Todos', couponInput: '', cep: '', selectedBanner: 0 };
-    const formatBRL = (v) => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const api = {
-      async load() {
-        const [siteRes, prodRes] = await Promise.all([
-          fetch('./data/site.json'),
-          fetch('./data/produtos.json')
-        ]);
-        if (!siteRes.ok || !prodRes.ok) throw new Error('Dados não encontrados');
-        state.site = await siteRes.json();
-        state.products = await prodRes.json();
-      }
-    };
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 p-4 overflow-y-auto"><div id="modalBox" class="max-w-lg mx-auto mt-10 bg-white rounded-2xl p-6"></div></div>
+<div id="toasts" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[80] space-y-2"></div>
 
-    const allCategories = () => ['Todos', ...new Set(state.products.map(p => p.categoria))];
-    const currentCoupon = () => (state.site?.cupons || []).find(c => c.codigo.toUpperCase() === (state.couponInput || '').trim().toUpperCase() && c.ativo);
+<script>
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const K={prod:'mauy_produtos',site:'mauy_site',ped:'mauy_pedidos'};
+const brl=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
+const loadData=async(k,url)=>store.get(k,null)??await fetch(url).then(r=>r.json());
+function toast(m,t='ok'){const e=document.createElement('div');e.className=`px-4 py-2 rounded-full text-sm shadow-lg text-white ${t==='err'?'bg-red-700':'bg-[#59283B]'}`;e.textContent=m;$('#toasts').appendChild(e);setTimeout(()=>e.remove(),2200)}
+const inp='w-full rounded-xl border border-[#C5A99A] px-3 py-2 text-sm bg-white';
+const btn='rounded-full bg-[#59283B] text-[#F5F1EB] px-4 py-2 text-sm font-medium';
+const btn2='rounded-full border border-[#59283B] text-[#59283B] px-4 py-2 text-sm';
+let site,produtos,pedidos,tab='dash';
 
-    const cartItems = () => state.cart.map(item => ({ ...item, subtotal: item.preco * item.qty }));
-    const subtotal = () => cartItems().reduce((sum, item) => sum + item.subtotal, 0);
-    const shipping = () => {
-      const total = subtotal();
-      if (!state.cep) return 0;
-      const regras = state.site?.frete?.regras || [];
-      if (state.site?.frete?.gratisAcima && total >= state.site.frete.gratisAcima) return 0;
-      const cepDigits = state.cep.replace(/\D/g, '');
-      for (const regra of regras) {
-        for (const faixa of regra.cep || []) {
-          const [inicio, fim] = faixa.split(' a ');
-          if (inicio && fim) {
-            const i = Number(inicio.replace(/\D/g, ''));
-            const f = Number(fim.replace(/\D/g, ''));
-            if (cepDigits >= i && cepDigits <= f) return Number(regra.valor || 0);
-          }
-        }
-      }
-      return 0;
-    };
+const openModal=h=>{$('#modalBox').innerHTML=h;$('#modal').classList.remove('hidden')};
+const closeModal=()=>$('#modal').classList.add('hidden');
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+const saveP=()=>store.set(K.prod,produtos),saveS=()=>store.set(K.site,site),saveO=()=>store.set(K.ped,pedidos);
+const head=(t,extra='')=>`<div class="flex flex-wrap items-center justify-between gap-3 mb-6"><h1 class="text-2xl font-medium text-[#59283B]">${t}</h1>${extra}</div>`;
 
-    const discount = () => {
-      const coupon = currentCoupon();
-      if (!coupon) return 0;
-      if (coupon.tipo === 'percentual') return subtotal() * (coupon.valor / 100);
-      return Math.min(coupon.valor, subtotal());
-    };
+function vDash(){
+  const validos=pedidos.filter(p=>p.status!=='Cancelado');
+  const receita=validos.reduce((s,p)=>s+p.total,0),un=validos.reduce((s,p)=>s+p.itens.reduce((a,i)=>a+i.qtd,0),0);
+  const baixo=produtos.filter(p=>p.estoque<=3);
+  const rank={};validos.forEach(p=>p.itens.forEach(i=>rank[i.nome]=(rank[i.nome]||0)+i.qtd));
+  const top=Object.entries(rank).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const card=(l,v)=>`<div class="bg-white rounded-2xl p-5 shadow-sm"><div class="text-xs uppercase tracking-wider text-[#C5A99A]">${l}</div><div class="text-2xl font-semibold text-[#59283B] mt-1">${v}</div></div>`;
+  return head('Visão geral')+`<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">${card('Receita',brl(receita))}${card('Pedidos',pedidos.length)}${card('Unidades vendidas',un)}${card('Ticket médio',brl(validos.length?receita/validos.length:0))}</div>
+  <div class="grid md:grid-cols-2 gap-4 mt-4">
+    <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Mais vendidos</h3>${top.length?top.map(([n,q])=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(n)}</span><span>${q}</span></div>`).join(''):'<p class="text-sm text-black/60">Sem vendas ainda.</p>'}</div>
+    <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Estoque baixo (≤3)</h3>${baixo.length?baixo.map(p=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(p.nome)}</span><span>${p.estoque}</span></div>`).join(''):'<p class="text-sm text-black/60">Tudo em ordem.</p>'}</div>
+  </div><p class="text-sm text-black/60 mt-4">${produtos.length} produtos cadastrados · ${(site.cupons||[]).filter(c=>c.ativo).length} cupons ativos</p>`;
+}
 
-    const total = () => Math.max(0, subtotal() + shipping() - discount());
+function vProd(){
+  return head('Produtos',`<button id="novoProd" class="${btn}">+ Novo produto</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-[#59283B] uppercase text-[10px] tracking-[.18em]"><tr><th class="p-3">Produto</th><th class="p-3">Categoria</th><th class="p-3">Estoque</th><th class="p-3">Preço</th><th class="p-3 text-right">Ações</th></tr></thead><tbody>${produtos.map((p,i)=>`<tr class="border-t border-black/5"><td class="p-3 flex items-center gap-3"><img src="${esc(p.imagem)}" onerror="this.style.visibility='hidden'" class="h-12 w-10 object-cover rounded-md bg-[#F5F1EB]" alt="${esc(p.nome)}"><div><div class="font-medium">${esc(p.nome)}</div><div class="text-black/50 text-xs">${esc(p.tamanhos?.join(', ')||'')}</div></div></td><td class="p-3">${esc(p.categoria)}</td><td class="p-3">${p.estoque}</td><td class="p-3">${brl(p.preco)}</td><td class="text-right pr-3 whitespace-nowrap"><button data-ed="${i}" class="underline text-[#59283B] mr-3">Editar</button><button data-del="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')}</tbody></table></div>`;
+}
+function formProd(i){
+  const p=i==null?{id:'',nome:'',preco:'',categoria:'Feminina',estoque:0,tamanhos:['P','M','G'],imagem:'',descricao:''}:produtos[i];
+  openModal(`<form id="fp" class="space-y-3"><h3 class="text-lg font-medium text-[#59283B]">${i==null?'Novo':'Editar'} produto</h3>
+  <input name="nome" required placeholder="Nome" value="${esc(p.nome)}" class="${inp}">
+  <div class="grid grid-cols-2 gap-3"><input name="preco" required type="number" min="0" step="0.01" placeholder="Preço" value="${p.preco}" class="${inp}"><input name="estoque" required type="number" min="0" step="1" placeholder="Estoque" value="${p.estoque}" class="${inp}"></div>
+  <input name="categoria" required list="cats" placeholder="Categoria" value="${esc(p.categoria)}" class="${inp}"><datalist id="cats">${[...new Set(produtos.map(x=>x.categoria))].map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist>
+  <input name="tamanhos" placeholder="Tamanhos separados por vírgula" value="${esc((p.tamanhos||[]).join(', '))}" class="${inp}">
+  <input name="imagem" placeholder="URL da imagem" value="${esc(p.imagem)}" class="${inp}">
+  <textarea name="descricao" rows="3" placeholder="Descrição" class="${inp}">${esc(p.descricao)}</textarea>
+  <div class="flex gap-2 justify-end"><button type="button" id="cx" class="${btn2}">Cancelar</button><button class="${btn}">Salvar</button></div></form>`);
+  $('#cx').onclick=closeModal;
+  $('#fp').onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+    const novo={...p,nome:f.nome.trim(),preco:+f.preco,estoque:parseInt(f.estoque),categoria:f.categoria.trim(),tamanhos:f.tamanhos.split(',').map(s=>s.trim()).filter(Boolean),imagem:f.imagem.trim(),descricao:f.descricao.trim()};
+    if(!novo.tamanhos.length)novo.tamanhos=['Único'];
+    if(i==null){novo.id='PRD-'+Date.now().toString(36).toUpperCase();produtos.push(novo)}else produtos[i]=novo;
+    saveP();closeModal();toast('Produto salvo');render();
+  }
+}
 
-    function addToCart(product) {
-      const existing = state.cart.find(i => i.id === product.id);
-      if (existing) existing.qty += 1;
-      else state.cart.push({ ...product, qty: 1, selectedSize: product.tamanhos?.[0] || 'Único' });
-      render();
-    }
+const STATUS=['Novo','Pago','Enviado','Entregue','Cancelado'];
+function vPed(){
+  return head('Pedidos')+(pedidos.length?`<div class="space-y-3">${[...pedidos].reverse().map(p=>{const i=pedidos.indexOf(p);return `<div class="bg-white rounded-2xl p-5"><div class="flex flex-wrap items-center justify-between gap-3"><div><h3 class="font-medium text-[#59283B]">Pedido #${p.id||i+1}</h3><div class="text-sm mt-1">${esc(p.cliente)} · ${esc(p.whatsapp)} · ${esc(p.pagamento)}${p.endereco?' · '+esc(p.endereco):''}</div></div><span class="text-xs uppercase tracking-wider text-[#C5A99A]">${esc(p.status)}</span></div><ul class="text-sm text-black/70 mt-2">${p.itens.map(it=>`<li>${it.qtd}× ${esc(it.nome)} (${esc(it.tam)}) — ${brl(it.preco*it.qtd)}</li>`).join('')}</ul><div class="text-xs text-black/50 mt-1">Frete ${p.frete?brl(p.frete):'grátis'} (${esc(p.entrega)})${p.cupom?` · Cupom ${esc(p.cupom)} −${brl(p.desconto)}`:''}</div><div class="flex gap-2 mt-3 items-center"><select data-st="${i}" class="${inp} !w-auto">${STATUS.map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select><button data-dp="${i}" class="underline text-red-700 text-sm">Excluir</button></div></div>`}).join('')}</div>`:'<p class="text-sm text-black/60">Nenhum pedido registrado.</p>');
+}
 
-    function changeQty(id, delta) {
-      const item = state.cart.find(i => i.id === id);
-      if (!item) return;
-      item.qty += delta;
-      if (item.qty <= 0) state.cart = state.cart.filter(i => i.id !== id);
-      render();
-    }
+function vCup(){
+  return head('Cupons de desconto',`<button id="novoCup" class="${btn}">+ Novo cupom</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-[#59283B] uppercase text-[10px] tracking-[.18em]"><tr><th class="p-3">Código</th><th class="p-3">Tipo</th><th class="p-3">Mínimo</th><th class="p-3">Status</th><th class="p-3 text-right">Ações</th></tr></thead><tbody>${(site.cupons||[]).map((c,i)=>`<tr class="border-t border-black/5"><td class="p-3 font-medium">${esc(c.codigo)}</td><td class="p-3">${c.tipo==='percentual'?c.valor+'%':brl(c.valor)}</td><td class="p-3">${brl(c.minimo)}</td><td class="p-3"><button data-tg="${i}" class="rounded-full px-2 py-1 text-xs ${c.ativo?'bg-[#59283B] text-white':'bg-black/5 text-black/60'}">${c.ativo?'Ativo':'Inativo'}</button></td><td class="p-3 text-right"><button data-dc="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')}</tbody></table></div>`;
+}
+function formCup(){
+  openModal(`<form id="fc" class="space-y-3"><h3 class="text-lg font-medium text-[#59283B]">Novo cupom</h3>
+  <input name="codigo" required placeholder="CÓDIGO" class="${inp} uppercase">
+  <div class="grid grid-cols-2 gap-3"><select name="tipo" class="${inp}"><option value="percentual">Percentual (%)</option><option value="fixo">Valor fixo (R$)</option></select><input name="valor" required type="number" min="0" step="0.01" placeholder="Valor" value="10" class="${inp}"></div>
+  <input name="minimo" type="number" min="0" step="0.01" placeholder="Pedido mínimo (R$)" value="0" class="${inp}">
+  <div class="flex gap-2 justify-end"><button type="button" id="cx" class="${btn2}">Cancelar</button><button class="${btn}">Criar</button></div></form>`);
+  $('#cx').onclick=closeModal;
+  $('#fc').onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const cod=f.codigo.trim().toUpperCase();
+    if((site.cupons||[]).some(c=>c.codigo===cod))return toast('Já existe um cupom com esse código','err');
+    if(f.tipo==='percentual'&&+f.valor>100)return toast('Percentual máximo: 100','err');
+    site.cupons=[...(site.cupons||[]),{codigo:cod,tipo:f.tipo,valor:+f.valor,minimo:+f.minimo||0,ativo:true}];saveS();closeModal();toast('Cupom criado');render();
+  }
+}
 
-    function checkout() {
-      if (!state.cart.length) return alert('Carrinho vazio.');
-      const message = [
-        'Olá! Quero fechar o pedido:',
-        ...state.cart.map(item => `- ${item.nome} (${item.selectedSize}) x${item.qty} - ${formatBRL(item.preco * item.qty)}`),
-        `Subtotal: ${formatBRL(subtotal())}`,
-        `Frete: ${formatBRL(shipping())}`,
-        `Desconto: -${formatBRL(discount())}`,
-        `Total: ${formatBRL(total())}`,
-        `CEP: ${state.cep || 'não informado'}`,
-        'Obrigado!'
-      ].join('\n');
-      const url = `https://wa.me/${state.site.whatsapp}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    }
+function vCfg(){
+  return head('Dados e exportação')+`<div class="bg-white rounded-2xl p-5 space-y-4 text-sm max-w-xl">
+  <p>As alterações ficam salvas no <b>localStorage</b> deste navegador e a loja já usa esses dados. Para publicar de forma definitiva no GitHub, exporte os JSON e substitua os arquivos em <code>site.json</code> e <code>produtos.json</code>.</p>
+  <div class="flex flex-wrap gap-2"><button id="exP" class="${btn}">Baixar produtos.json</button><button id="exS" class="${btn}">Baixar site.json</button><button id="exO" class="${btn2}">Baixar pedidos.json</button></div>
+  <hr><p>Restaurar remove as alterações locais (produtos, cupons, pedidos e carrinho) e volta aos arquivos JSON originais.</p><button id="reset" class="rounded-full border border-red-700 text-red-700 px-4 py-2 text-sm">Restaurar dados</button>
+</div>`;
+}
+function dl(name,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
 
-    function renderBanner() {
-      const banner = state.site.banners[state.selectedBanner];
-      if (!banner) return '';
-      return `
-        <section class="relative h-[420px] overflow-hidden">
-          <img src="${banner.imagem}" class="absolute inset-0 w-full h-full object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/20"></div>
-          <div class="relative z-10 flex h-full items-center px-6 md:px-16">
-            <div class="max-w-xl text-white">
-              <p class="text-xs uppercase tracking-[0.35em] mb-4 text-[#C5A99A]">MAUY</p>
-              <h1 class="text-4xl md:text-6xl font-semibold leading-tight">${banner.titulo}</h1>
-              <p class="mt-4 text-lg md:text-xl text-white/90">${banner.texto}</p>
-              <button class="mt-6 rounded-full bg-[#59283B] px-6 py-3 text-sm font-medium text-[#F5F1EB]">${banner.cta}</button>
-            </div>
-          </div>
-        </section>
-      `;
-    }
-
-    function renderProducts() {
-      const categories = allCategories();
-      const visible = state.products.filter(product => state.filter === 'Todos' || product.categoria === state.filter);
-      return `
-        <section class="max-w-7xl mx-auto px-4 py-10 md:px-8">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <div>
-              <p class="text-xs uppercase tracking-[0.25em] text-[#C5A99A]">Coleção</p>
-              <h2 class="text-3xl font-semibold text-[#59283B]">Produtos</h2>
-            </div>
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar">
-              ${categories.map(cat => `
-                <button data-filter="${cat}" class="rounded-full border px-4 py-2 text-sm ${state.filter === cat ? 'bg-[#59283B] text-white border-[#59283B]' : 'border-[#59283B] text-[#59283B]'}">
-                  ${cat}
-                </button>
-              `).join('')}
-            </div>
-          </div>
-
-          <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            ${visible.map(product => `
-              <article class="overflow-hidden rounded-3xl bg-white shadow-sm border border-black/5">
-                <img src="${product.imagem}" class="h-72 w-full object-cover" />
-                <div class="p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <p class="text-xs uppercase tracking-[0.18em] text-[#C5A99A]">${product.categoria}</p>
-                      <h3 class="mt-2 text-xl font-semibold text-[#29292B]">${product.nome}</h3>
-                    </div>
-                    <span class="text-lg font-semibold text-[#59283B]">${formatBRL(product.preco)}</span>
-                  </div>
-                  <p class="mt-3 text-sm text-black/60">Estoque: ${product.estoque}</p>
-                  <div class="mt-5 flex items-center justify-between">
-                    <select data-size="${product.id}" class="rounded-full border border-[#C5A99A] bg-[#F5F1EB] px-3 py-2 text-sm">
-                      ${(product.tamanhos || ['Único']).map(size => `<option value="${size}">${size}</option>`).join('')}
-                    </select>
-                    <button data-add="${product.id}" class="rounded-full bg-[#59283B] px-5 py-2.5 text-sm font-medium text-white">Adicionar</button>
-                  </div>
-                </div>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `;
-    }
-
-    function renderCart() {
-      const items = cartItems();
-      const coupon = currentCoupon();
-      return `
-        <aside class="lg:w-[420px] bg-white border-l border-black/10 p-5 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-          <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-semibold text-[#59283B]">Carrinho</h2>
-            <span class="rounded-full bg-[#F5F1EB] px-3 py-1 text-xs font-medium text-[#59283B]">${items.length} itens</span>
-          </div>
-
-          <div class="mt-5 space-y-3">
-            ${items.length ? items.map(item => `
-              <div class="rounded-2xl border border-black/5 p-3">
-                <div class="flex gap-3">
-                  <img src="${item.imagem}" class="h-16 w-16 rounded-xl object-cover" />
-                  <div class="flex-1">
-                    <div class="flex items-center justify-between gap-3">
-                      <p class="font-medium">${item.nome}</p>
-                      <button data-remove="${item.id}" class="text-xs text-red-600">remover</button>
-                    </div>
-                    <p class="text-xs text-black/60">Tamanho: ${item.selectedSize}</p>
-                    <div class="mt-2 flex items-center justify-between">
-                      <div class="flex items-center gap-2 rounded-full border border-[#C5A99A] px-2 py-1">
-                        <button data-qty="${item.id},-1" class="text-lg leading-none">−</button>
-                        <span class="text-sm min-w-6 text-center">${item.qty}</span>
-                        <button data-qty="${item.id},1" class="text-lg leading-none">+</button>
-                      </div>
-                      <strong>${formatBRL(item.subtotal)}</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `).join('') : '<p class="text-sm text-black/60">Seu carrinho está vazio.</p>'}
-          </div>
-
-          <div class="mt-6 rounded-2xl bg-[#F5F1EB] p-4">
-            <label class="text-xs uppercase tracking-[0.2em] text-[#C5A99A]">CEP</label>
-            <input id="cepInput" value="${state.cep || ''}" placeholder="Digite seu CEP" class="mt-2 w-full rounded-xl border border-[#C5A99A] bg-white px-3 py-2 outline-none" />
-            <button id="calcShipping" class="mt-3 w-full rounded-full bg-[#59283B] px-4 py-2 text-sm text-white">Calcular frete</button>
-          </div>
-
-          <div class="mt-6 space-y-3 rounded-2xl border border-black/5 p-4">
-            <div class="flex gap-2">
-              <input id="couponInput" value="${state.couponInput}" placeholder="Cupom" class="flex-1 rounded-full border border-[#C5A99A] px-3 py-2 text-sm" />
-              <button id="applyCoupon" class="rounded-full bg-[#59283B] px-4 py-2 text-sm text-white">Aplicar</button>
-            </div>
-            ${coupon ? `<p class="text-xs text-green-700">Cupom ${coupon.codigo} aplicado.</p>` : '<p class="text-xs text-black/50">Use MAUY10 ou FRETE20.</p>'}
-            <div class="space-y-2 text-sm">
-              <div class="flex justify-between"><span>Subtotal</span><strong>${formatBRL(subtotal())}</strong></div>
-              <div class="flex justify-between"><span>Frete</span><strong>${formatBRL(shipping())}</strong></div>
-              <div class="flex justify-between"><span>Desconto</span><strong>-${formatBRL(discount())}</strong></div>
-              <div class="flex justify-between text-base font-semibold text-[#59283B]"><span>Total</span><strong>${formatBRL(total())}</strong></div>
-            </div>
-            <button id="checkoutBtn" class="w-full rounded-full bg-[#59283B] px-4 py-3 text-sm font-medium text-white">Finalizar pedido no WhatsApp</button>
-          </div>
-        </aside>
-      `;
-    }
-
-    function render() {
-      const root = document.getElementById('app');
-      root.innerHTML = `
-        <div class="min-h-screen bg-[#F5F1EB]">
-          <header class="sticky top-0 z-30 border-b border-black/5 bg-[#F5F1EB]/90 backdrop-blur">
-            <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
-              <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#59283B] text-sm font-bold text-white">M</div>
-                <div>
-                  <div class="text-xl font-bold tracking-[0.2em] text-[#59283B]">MAUY</div>
-                  <div class="text-[10px] uppercase tracking-[0.25em] text-[#C5A99A]">fitness</div>
-                </div>
-              </div>
-              <nav class="hidden items-center gap-6 text-sm md:flex">
-                <a href="#colecao" class="text-[#29292B]">Coleção</a>
-                <a href="#frete" class="text-[#29292B]">Frete</a>
-                <a href="/admin/" class="text-[#59283B] underline">Painel</a>
-              </nav>
-              <a href="https://wa.me/${state.site?.whatsapp || '5547992708359'}" target="_blank" class="rounded-full border border-[#59283B] px-4 py-2 text-sm font-medium text-[#59283B]">WhatsApp</a>
-            </div>
-          </header>
-
-          ${renderBanner()}
-
-          <section id="colecao" class="max-w-7xl mx-auto px-4 py-10 md:px-8">
-            <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
-              <div>
-                ${renderProducts()}
-              </div>
-              ${renderCart()}
-            </div>
-          </section>
-
-          <section id="frete" class="max-w-7xl mx-auto px-4 pb-16 md:px-8">
-            <div class="rounded-3xl bg-white p-6 shadow-sm border border-black/5">
-              <h3 class="text-2xl font-semibold text-[#59283B]">Frete e retirada</h3>
-              <div class="mt-4 grid gap-4 md:grid-cols-2">
-                <div>
-                  <p class="text-sm text-black/60">Frete grátis acima de ${formatBRL(state.site?.frete?.gratisAcima || 0)}.</p>
-                  <ul class="mt-3 space-y-2 text-sm">
-                    ${(state.site?.frete?.regras || []).map(rule => `
-                      <li><strong>${rule.nome}</strong>: ${rule.prazo} • ${formatBRL(rule.valor)}</li>
-                    `).join('')}
-                  </ul>
-                </div>
-                ${state.site?.frete?.retirada?.ativo ? `<div class="rounded-2xl bg-[#F5F1EB] p-4 text-sm"><strong>Retirada:</strong> ${state.site.frete.retirada.texto}</div>` : ''}
-              </div>
-            </div>
-          </section>
-        </div>
-      `;
-
-      document.querySelectorAll('[data-filter]').forEach(btn => btn.addEventListener('click', () => {
-        state.filter = btn.dataset.filter;
-        render();
-      }));
-
-      document.querySelectorAll('[data-add]').forEach(btn => btn.addEventListener('click', () => {
-        const product = state.products.find(p => p.id === btn.dataset.add);
-        if (product) addToCart(product);
-      }));
-
-      document.querySelectorAll('[data-size]').forEach(select => {
-        select.addEventListener('change', (e) => {
-          const cartItem = state.cart.find(i => i.id === select.dataset.size);
-          if (cartItem) cartItem.selectedSize = e.target.value;
-        });
-      });
-
-      document.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', () => {
-        state.cart = state.cart.filter(item => item.id !== btn.dataset.remove);
-        render();
-      }));
-
-      document.querySelectorAll('[data-qty]').forEach(btn => btn.addEventListener('click', () => {
-        const [id, delta] = btn.dataset.qty.split(',');
-        changeQty(id, Number(delta));
-      }));
-
-      const cepInput = document.getElementById('cepInput');
-      const couponInput = document.getElementById('couponInput');
-      if (cepInput) {
-        cepInput.addEventListener('input', (e) => {
-          state.cep = e.target.value;
-        });
-      }
-      document.getElementById('calcShipping')?.addEventListener('click', () => {
-        render();
-      });
-      document.getElementById('applyCoupon')?.addEventListener('click', () => {
-        state.couponInput = couponInput.value.trim();
-        render();
-      });
-      document.getElementById('checkoutBtn')?.addEventListener('click', checkout);
-      document.querySelectorAll('.banner-dot')?.forEach(...);
-    }
-
-    async function init() {
-      try {
-        await api.load();
-        render();
-      } catch (error) {
-        document.getElementById('app').innerHTML = '<div class="p-10 text-center">Não foi possível carregar os dados do site.</div>';
-      }
-    }
-    init();
-  </script>
+function render(){
+  $$('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===tab));
+  $('#view').innerHTML={dash:vDash,prod:vProd,ped:vPed,cup:vCup,cfg:vCfg}[tab]();
+  $('#novoProd')?.addEventListener('click',()=>formProd());
+  $$('[data-ed]').forEach(b=>b.onclick=()=>formProd(+b.dataset.ed));
+  $$('[data-del]').forEach(b=>b.onclick=()=>{const p=produtos[b.dataset.del];if(confirm(`Excluir "${p.nome}"?`)){produtos.splice(b.dataset.del,1);saveP();toast('Produto excluído');render()}});
+  $$('[data-st]').forEach(s=>s.onchange=()=>{pedidos[s.dataset.st].status=s.value;saveO();toast('Status atualizado')});
+  $$('[data-dp]').forEach(b=>b.onclick=()=>{if(confirm('Excluir este pedido?')){pedidos.splice(b.dataset.dp,1);saveO();toast('Pedido excluído');render()}});
+  $('#novoCup')?.addEventListener('click',formCup);
+  $$('[data-tg]').forEach(b=>b.onclick=()=>{const c=site.cupons[b.dataset.tg];c.ativo=!c.ativo;saveS();render()});
+  $$('[data-dc]').forEach(b=>b.onclick=()=>{if(confirm('Excluir cupom?')){site.cupons.splice(b.dataset.dc,1);saveS();toast('Cupom excluído');render()}});
+  $('#exP')?.addEventListener('click',()=>dl('produtos.json',produtos));
+  $('#exS')?.addEventListener('click',()=>dl('site.json',site));
+  $('#exO')?.addEventListener('click',()=>dl('pedidos.json',pedidos));
+  $('#reset')?.addEventListener('click',()=>{if(confirm('Apagar todas as alterações locais?')){['mauy_produtos','mauy_site','mauy_pedidos','mauy_carrinho'].forEach(k=>localStorage.removeItem(k));location.reload()}});
+}
+$$('.tab').forEach(t=>t.onclick=()=>{tab=t.dataset.tab;render()});
+(async()=>{
+  try{[site,produtos]=await Promise.all([loadData(K.site,'../data/site.json'),loadData(K.prod,'../data/produtos.json')]);pedidos=store.get(K.ped,[]);render();}
+  catch(e){console.error(e);$('#view').innerHTML='<p>Não foi possível carregar os dados. Confirme se site.json e produtos.json estão publicados na raiz do site.</p>'}
+})();
+</script>
 </body>
 </html>
