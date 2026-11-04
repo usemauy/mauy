@@ -3,9 +3,25 @@
   "whatsapp": "5547992708359",
   "tema": {"wine":"#59283B","sand":"#F5F1EB","nude":"#C5A99A","ink":"#29292B"},
   "banners": [
-    {"titulo":"Força em cada detalhe.","texto":"Activewear clean e sofisticado, do treino à rotina.","cta":"Ver coleção","imagem":"https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80"},
-    {"titulo":"Essentials para o seu treino","texto":"Acessórios práticos que acompanham cada movimento.","cta":"Ver acessórios","categoria":"Acessórios","imagem":"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80"},
-    {"titulo":"10% OFF na primeira compra","texto":"Use o cupom MAUY10 em pedidos a partir de R$ 50.","cta":"Aproveitar","imagem":"https://images.unsplash.com/photo-1540496905036-5937c10647cc?w=1600&q=80"}
+    {
+      "titulo": "Elegância em movimento.",
+      "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+      "cta": "Descobrir a coleção",
+      "imagem": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=2000&q=85"
+    },
+    {
+      "titulo": "A força está nos detalhes.",
+      "texto": "Texturas, conforto e formas que valorizam cada movimento.",
+      "cta": "Conhecer os essenciais",
+      "categoria": "Feminina",
+      "imagem": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=85"
+    },
+    {
+      "titulo": "Vista o seu melhor ritmo.",
+      "texto": "Um novo olhar para a sua rotina. Ganhe 10% na primeira compra com MAUY10.",
+      "cta": "Escolher minha peça",
+      "imagem": "https://images.unsplash.com/photo-1540496905036-5937c10647cc?auto=format&fit=crop&w=1800&q=85"
+    }
   ],
   "frete": {
     "gratisAcima": 400,
