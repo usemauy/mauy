@@ -32,7 +32,7 @@ const brl=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))};
 const loadData=async(k,url)=>store.get(k,null)??await fetch(url).then(r=>r.json());
-function toast(m,t='ok'){const e=document.createElement('div');e.className=`px-4 py-2 rounded-full text-sm shadow-lg text-white ${t==='err'?'bg-red-700':'bg-[#59283B]'}`;e.textContent=m;$('#toasts').append(e);setTimeout(()=>e.remove(),3000)}
+function toast(m,t='ok'){const e=document.createElement('div');e.className=`px-4 py-2 rounded-full text-sm shadow-lg text-white ${t==='err'?'bg-red-700':'bg-[#59283B]'}`;e.textContent=m;$('#toasts').appendChild(e);setTimeout(()=>e.remove(),2200)}
 const inp='w-full rounded-xl border border-[#C5A99A] px-3 py-2 text-sm bg-white';
 const btn='rounded-full bg-[#59283B] text-[#F5F1EB] px-4 py-2 text-sm font-medium';
 const btn2='rounded-full border border-[#59283B] text-[#59283B] px-4 py-2 text-sm';
@@ -54,23 +54,21 @@ function vDash(){
   const card=(l,v)=>`<div class="bg-white rounded-2xl p-5 shadow-sm"><div class="text-xs uppercase tracking-wider text-[#C5A99A]">${l}</div><div class="text-2xl font-semibold text-[#59283B] mt-1">${v}</div></div>`;
   return head('Visão geral')+`<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">${card('Receita',brl(receita))}${card('Pedidos',pedidos.length)}${card('Unidades vendidas',un)}${card('Ticket médio',brl(validos.length?receita/validos.length:0))}</div>
   <div class="grid md:grid-cols-2 gap-4 mt-4">
-   <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Mais vendidos</h3>${top.length?top.map(([n,q])=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(n)}</span><b>${q}</b></div>`).join(''):'<p class="text-sm text-black/50">Sem vendas ainda.</p>'}</div>
-   <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Estoque baixo (≤3)</h3>${baixo.length?baixo.map(p=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(p.nome)}</span><b class="${p.estoque?'text-amber-700':'text-red-700'}">${p.estoque}</b></div>`).join(''):'<p class="text-sm text-black/50">Tudo certo por aqui.</p>'}</div>
+    <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Mais vendidos</h3>${top.length?top.map(([n,q])=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(n)}</span><span>${q}</span></div>`).join(''):'<p class="text-sm text-black/60">Sem vendas ainda.</p>'}</div>
+    <div class="bg-white rounded-2xl p-5"><h3 class="font-medium mb-3">Estoque baixo (≤3)</h3>${baixo.length?baixo.map(p=>`<div class="flex justify-between text-sm py-1 border-b border-black/5"><span>${esc(p.nome)}</span><span>${p.estoque}</span></div>`).join(''):'<p class="text-sm text-black/60">Tudo em ordem.</p>'}</div>
   </div><p class="text-sm text-black/60 mt-4">${produtos.length} produtos cadastrados · ${(site.cupons||[]).filter(c=>c.ativo).length} cupons ativos</p>`;
 }
 
 /* ---------- Produtos ---------- */
 function vProd(){
-  return head('Produtos',`<button id="novoProd" class="${btn}">+ Novo produto</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-xs uppercase text-[#C5A99A]"><tr><th class="p-3">Produto</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th></th></tr></thead><tbody>
-  ${produtos.map((p,i)=>`<tr class="border-t border-black/5"><td class="p-3 flex items-center gap-3"><img src="${esc(p.imagem)}" onerror="this.style.visibility='hidden'" class="h-12 w-10 object-cover rounded-md bg-[#E9DDD3]"><div><div class="font-medium">${esc(p.nome)}</div><div class="text-xs text-black/50">${esc(p.id)}</div></div></td><td>${esc(p.categoria)}</td><td>${brl(p.preco)}</td><td class="${p.estoque<=3?'text-red-700 font-medium':''}">${p.estoque}</td>
-  <td class="text-right pr-3 whitespace-nowrap"><button data-ed="${i}" class="underline text-[#59283B] mr-3">Editar</button><button data-del="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')||'<tr><td class="p-6 text-center text-black/50" colspan="5">Nenhum produto.</td></tr>'}</tbody></table></div>`;
+  return head('Produtos',`<button id="novoProd" class="${btn}">+ Novo produto</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-[#59283B] uppercase text-[10px] tracking-[.18em]"><tr><th class="p-3">Produto</th><th class="p-3">Categoria</th><th class="p-3">Estoque</th><th class="p-3">Preço</th><th class="p-3 text-right">Ações</th></tr></thead><tbody>${produtos.map((p,i)=>`<tr class="border-t border-black/5"><td class="p-3 flex items-center gap-3"><img src="${esc(p.imagem)}" onerror="this.style.visibility='hidden'" class="h-12 w-10 object-cover rounded-md bg-[#F5F1EB]" alt="${esc(p.nome)}"><div><div class="font-medium">${esc(p.nome)}</div><div class="text-black/50 text-xs">${esc(p.tamanhos?.join(', ')||'')}</div></div></td><td class="p-3">${esc(p.categoria)}</td><td class="p-3">${p.estoque}</td><td class="p-3">${brl(p.preco)}</td><td class="text-right pr-3 whitespace-nowrap"><button data-ed="${i}" class="underline text-[#59283B] mr-3">Editar</button><button data-del="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')}</tbody></table></div>`;
 }
 function formProd(i){
   const p=i==null?{id:'',nome:'',preco:'',categoria:'Feminina',estoque:0,tamanhos:['P','M','G'],imagem:'',descricao:''}:produtos[i];
   openModal(`<form id="fp" class="space-y-3"><h3 class="text-lg font-medium text-[#59283B]">${i==null?'Novo':'Editar'} produto</h3>
   <input name="nome" required placeholder="Nome" value="${esc(p.nome)}" class="${inp}">
   <div class="grid grid-cols-2 gap-3"><input name="preco" required type="number" min="0" step="0.01" placeholder="Preço" value="${p.preco}" class="${inp}"><input name="estoque" required type="number" min="0" step="1" placeholder="Estoque" value="${p.estoque}" class="${inp}"></div>
-  <input name="categoria" required list="cats" placeholder="Categoria" value="${esc(p.categoria)}" class="${inp}"><datalist id="cats">${[...new Set(produtos.map(x=>x.categoria))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+  <input name="categoria" required list="cats" placeholder="Categoria" value="${esc(p.categoria)}" class="${inp}"><datalist id="cats">${[...new Set(produtos.map(x=>x.categoria))].map(c=>`<option value="${esc(c)}"></option>`).join('')}</datalist>
   <input name="tamanhos" placeholder="Tamanhos separados por vírgula" value="${esc((p.tamanhos||[]).join(', '))}" class="${inp}">
   <input name="imagem" placeholder="URL da imagem" value="${esc(p.imagem)}" class="${inp}">
   <textarea name="descricao" rows="3" placeholder="Descrição" class="${inp}">${esc(p.descricao)}</textarea>
@@ -80,45 +78,43 @@ function formProd(i){
     const novo={...p,nome:f.nome.trim(),preco:+f.preco,estoque:parseInt(f.estoque),categoria:f.categoria.trim(),tamanhos:f.tamanhos.split(',').map(s=>s.trim()).filter(Boolean),imagem:f.imagem.trim(),descricao:f.descricao.trim()};
     if(!novo.tamanhos.length)novo.tamanhos=['Único'];
     if(i==null){novo.id='PRD-'+Date.now().toString(36).toUpperCase();produtos.push(novo)}else produtos[i]=novo;
-    saveP();closeModal();toast('Produto salvo');render()};
+    saveP();closeModal();toast('Produto salvo');render();
+  }
 }
 
 /* ---------- Pedidos ---------- */
 const STATUS=['Novo','Pago','Enviado','Entregue','Cancelado'];
 function vPed(){
-  return head('Pedidos')+(pedidos.length?`<div class="space-y-3">${[...pedidos].reverse().map(p=>{const i=pedidos.indexOf(p);return `<div class="bg-white rounded-2xl p-5"><div class="flex flex-wrap justify-between gap-2"><div><b class="text-[#59283B]">${esc(p.id)}</b> <span class="text-xs text-black/50">${new Date(p.data).toLocaleString('pt-BR')}</span></div><b>${brl(p.total)}</b></div>
-  <div class="text-sm mt-1">${esc(p.cliente)} · ${esc(p.whatsapp)} · ${esc(p.pagamento)}${p.endereco?' · '+esc(p.endereco):''}</div>
-  <ul class="text-sm text-black/70 mt-2">${p.itens.map(it=>`<li>${it.qtd}× ${esc(it.nome)} (${esc(it.tam)}) — ${brl(it.preco*it.qtd)}</li>`).join('')}</ul>
-  <div class="text-xs text-black/50 mt-1">Frete ${p.frete?brl(p.frete):'grátis'} (${esc(p.entrega)})${p.cupom?` · Cupom ${esc(p.cupom)} −${brl(p.desconto)}`:''}</div>
-  <div class="flex gap-2 mt-3 items-center"><select data-st="${i}" class="${inp} !w-auto">${STATUS.map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select><button data-dp="${i}" class="underline text-red-700 text-sm">Excluir</button></div></div>`}).join('')}</div>`:'<p class="text-black/50">Nenhum pedido registrado ainda. Faça uma compra simulada na loja.</p>');
+  return head('Pedidos')+(pedidos.length?`<div class="space-y-3">${[...pedidos].reverse().map(p=>{const i=pedidos.indexOf(p);return `<div class="bg-white rounded-2xl p-5"><div class="flex flex-wrap items-center justify-between gap-3"><div><h3 class="font-medium text-[#59283B]">Pedido #${p.id||i+1}</h3><div class="text-sm mt-1">${esc(p.cliente)} · ${esc(p.whatsapp)} · ${esc(p.pagamento)}${p.endereco?' · '+esc(p.endereco):''}</div></div><span class="text-xs uppercase tracking-wider text-[#C5A99A]">${esc(p.status)}</span></div><ul class="text-sm text-black/70 mt-2">${p.itens.map(it=>`<li>${it.qtd}× ${esc(it.nome)} (${esc(it.tam)}) — ${brl(it.preco*it.qtd)}</li>`).join('')}</ul><div class="text-xs text-black/50 mt-1">Frete ${p.frete?brl(p.frete):'grátis'} (${esc(p.entrega)})${p.cupom?` · Cupom ${esc(p.cupom)} −${brl(p.desconto)}`:''}</div><div class="flex gap-2 mt-3 items-center"><select data-st="${i}" class="${inp} !w-auto">${STATUS.map(s=>`<option ${s===p.status?'selected':''}>${s}</option>`).join('')}</select><button data-dp="${i}" class="underline text-red-700 text-sm">Excluir</button></div></div>`}).join('')}</div>`:'<p class="text-sm text-black/60">Nenhum pedido registrado.</p>');
 }
 
 /* ---------- Cupons ---------- */
 function vCup(){
-  return head('Cupons de desconto',`<button id="novoCup" class="${btn}">+ Novo cupom</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-xs uppercase text-[#C5A99A]"><tr><th class="p-3">Código</th><th>Desconto</th><th>Mínimo</th><th>Status</th><th></th></tr></thead><tbody>
-  ${(site.cupons||[]).map((c,i)=>`<tr class="border-t border-black/5"><td class="p-3 font-medium">${esc(c.codigo)}</td><td>${c.tipo==='percentual'?c.valor+'%':brl(c.valor)}</td><td>${brl(c.minimo)}</td><td><button data-tg="${i}" class="rounded-full px-3 py-1 text-xs ${c.ativo?'bg-green-100 text-green-800':'bg-black/10'}">${c.ativo?'Ativo':'Inativo'}</button></td><td class="text-right pr-3"><button data-dc="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')||'<tr><td colspan="5" class="p-6 text-center text-black/50">Nenhum cupom.</td></tr>'}</tbody></table></div>`;
+  return head('Cupons de desconto',`<button id="novoCup" class="${btn}">+ Novo cupom</button>`)+`<div class="bg-white rounded-2xl overflow-x-auto"><table class="w-full text-sm"><thead class="text-left text-[#59283B] uppercase text-[10px] tracking-[.18em]"><tr><th class="p-3">Código</th><th class="p-3">Tipo</th><th class="p-3">Mínimo</th><th class="p-3">Status</th><th class="p-3 text-right">Ações</th></tr></thead><tbody>${(site.cupons||[]).map((c,i)=>`<tr class="border-t border-black/5"><td class="p-3 font-medium">${esc(c.codigo)}</td><td class="p-3">${c.tipo==='percentual'?c.valor+'%':brl(c.valor)}</td><td class="p-3">${brl(c.minimo)}</td><td class="p-3"><button data-tg="${i}" class="rounded-full px-2 py-1 text-xs ${c.ativo?'bg-[#59283B] text-white':'bg-black/5 text-black/60'}">${c.ativo?'Ativo':'Inativo'}</button></td><td class="p-3 text-right"><button data-dc="${i}" class="underline text-red-700">Excluir</button></td></tr>`).join('')}</tbody></table></div>`;
 }
 function formCup(){
   openModal(`<form id="fc" class="space-y-3"><h3 class="text-lg font-medium text-[#59283B]">Novo cupom</h3>
   <input name="codigo" required placeholder="CÓDIGO" class="${inp} uppercase">
-  <div class="grid grid-cols-2 gap-3"><select name="tipo" class="${inp}"><option value="percentual">Percentual (%)</option><option value="fixo">Valor fixo (R$)</option></select><input name="valor" required type="number" min="0.01" step="0.01" placeholder="Valor" class="${inp}"></div>
+  <div class="grid grid-cols-2 gap-3"><select name="tipo" class="${inp}"><option value="percentual">Percentual (%)</option><option value="fixo">Valor fixo (R$)</option></select><input name="valor" required type="number" min="0" step="0.01" placeholder="Valor" value="10" class="${inp}"></div>
   <input name="minimo" type="number" min="0" step="0.01" placeholder="Pedido mínimo (R$)" value="0" class="${inp}">
   <div class="flex gap-2 justify-end"><button type="button" id="cx" class="${btn2}">Cancelar</button><button class="${btn}">Criar</button></div></form>`);
   $('#cx').onclick=closeModal;
   $('#fc').onsubmit=e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const cod=f.codigo.trim().toUpperCase();
     if((site.cupons||[]).some(c=>c.codigo===cod))return toast('Já existe um cupom com esse código','err');
     if(f.tipo==='percentual'&&+f.valor>100)return toast('Percentual máximo: 100','err');
-    site.cupons=[...(site.cupons||[]),{codigo:cod,tipo:f.tipo,valor:+f.valor,minimo:+f.minimo||0,ativo:true}];saveS();closeModal();toast('Cupom criado');render()};
+    site.cupons=[...(site.cupons||[]),{codigo:cod,tipo:f.tipo,valor:+f.valor,minimo:+f.minimo||0,ativo:true}];saveS();closeModal();toast('Cupom criado');render();
+  }
 }
 
 /* ---------- Dados ---------- */
 function vCfg(){
   return head('Dados e exportação')+`<div class="bg-white rounded-2xl p-5 space-y-4 text-sm max-w-xl">
-  <p>As alterações ficam salvas no <b>localStorage</b> deste navegador e a loja já usa esses dados. Para publicar de forma definitiva no GitHub, exporte os JSON e substitua os arquivos em <code>data/</code>.</p>
+  <p>As alterações ficam salvas no <b>localStorage</b> deste navegador e a loja já usa esses dados. Para publicar de forma definitiva no GitHub, exporte os JSON e substitua os arquivos em <code>site.json</code> e <code>produtos.json</code>.</p>
   <div class="flex flex-wrap gap-2"><button id="exP" class="${btn}">Baixar produtos.json</button><button id="exS" class="${btn}">Baixar site.json</button><button id="exO" class="${btn2}">Baixar pedidos.json</button></div>
-  <hr><p>Restaurar remove as alterações locais (produtos, cupons, pedidos e carrinho) e volta aos arquivos JSON originais.</p><button id="reset" class="rounded-full border border-red-700 text-red-700 px-4 py-2">Restaurar dados originais</button></div>`;
+  <hr><p>Restaurar remove as alterações locais (produtos, cupons, pedidos e carrinho) e volta aos arquivos JSON originais.</p><button id="reset" class="rounded-full border border-red-700 text-red-700 px-4 py-2 text-sm">Restaurar dados</button>
+</div>`;
 }
-function dl(name,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=name;a.click();URL.revokeObjectURL(a.href);toast('Arquivo gerado')}
+function dl(name,data){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
 
 /* ---------- Render / eventos ---------- */
 function render(){
@@ -139,8 +135,8 @@ function render(){
 }
 $$('.tab').forEach(t=>t.onclick=()=>{tab=t.dataset.tab;render()});
 (async()=>{
-  try{[site,produtos]=await Promise.all([loadData(K.site,'../data/site.json'),loadData(K.prod,'../data/produtos.json')]);pedidos=store.get(K.ped,[]);render()}
-  catch(e){console.error(e);$('#view').innerHTML='<p>Não foi possível carregar os dados. Publique no GitHub Pages ou use <code>python3 -m http.server</code>.</p>'}
+  try{[site,produtos]=await Promise.all([loadData(K.site,'./site.json'),loadData(K.prod,'./produtos.json')]);pedidos=store.get(K.ped,[]);render();}
+  catch(e){console.error(e);$('#view').innerHTML='<p>Não foi possível carregar os dados. Confirme se site.json e produtos.json estão publicados na raiz do site.</p>'}
 })();
 </script>
 </body>
