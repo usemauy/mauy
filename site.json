@@ -1,0 +1,22 @@
+{
+  "nome": "MAUY",
+  "whatsapp": "5547992708359",
+  "tema": {"wine":"#59283B","sand":"#F5F1EB","nude":"#C5A99A","ink":"#29292B"},
+  "banners": [
+    {"titulo":"Força em cada detalhe.","texto":"Activewear clean e sofisticado, do treino à rotina.","cta":"Ver coleção","imagem":"https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80"},
+    {"titulo":"Essentials para o seu treino","texto":"Acessórios práticos que acompanham cada movimento.","cta":"Ver acessórios","categoria":"Acessórios","imagem":"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80"},
+    {"titulo":"10% OFF na primeira compra","texto":"Use o cupom MAUY10 em pedidos a partir de R$ 50.","cta":"Aproveitar","imagem":"https://images.unsplash.com/photo-1540496905036-5937c10647cc?w=1600&q=80"}
+  ],
+  "frete": {
+    "gratisAcima": 400,
+    "retirada": {"ativo": true, "texto": "Retirar na loja (combinar pelo WhatsApp)"},
+    "regras": [
+      {"nome":"Santa Catarina","cep":["88000-000 a 89999-999"],"valor":18.9,"prazo":"3 a 5 dias úteis"},
+      {"nome":"Demais regiões","cep":["01000-000 a 87999-999","90000-000 a 99999-999"],"valor":44.9,"prazo":"7 a 12 dias úteis"}
+    ]
+  },
+  "cupons": [
+    {"codigo":"MAUY10","tipo":"percentual","valor":10,"minimo":50,"ativo":true},
+    {"codigo":"FRETE20","tipo":"fixo","valor":20,"minimo":150,"ativo":true}
+  ]
+}

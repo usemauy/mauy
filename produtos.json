@@ -1,0 +1,8 @@
+[
+  {"id":"FEM-LEG-001","nome":"Legging Cintura Alta","preco":169.9,"categoria":"Feminina","estoque":5,"tamanhos":["P","M","G","GG"],"imagem":"https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80","descricao":"Cintura alta com compressão leve e tecido que não marca. Do treino ao café."},
+  {"id":"FEM-TOP-001","nome":"Top Básico Fio Egípcio","preco":99.9,"categoria":"Feminina","estoque":8,"tamanhos":["P","M","G","GG"],"imagem":"https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80","descricao":"100% algodão fio egípcio: macio, respirável e durável. Sustentação média."},
+  {"id":"FEM-SHO-001","nome":"Short Básico Fio Egípcio","preco":89.9,"categoria":"Feminina","estoque":6,"tamanhos":["P","M","G","GG"],"imagem":"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80","descricao":"Short confortável em algodão fio egípcio, com caimento leve."},
+  {"id":"FEM-CON-001","nome":"Conjunto Top + Legging","preco":269.9,"categoria":"Feminina","estoque":4,"tamanhos":["P","M","G","GG"],"imagem":"https://images.unsplash.com/photo-1483721310020-03333e577078?w=800&q=80","descricao":"Conjunto completo na mesma tonalidade. Pronto para sair."},
+  {"id":"ACE-GAR-001","nome":"Garrafa Térmica 600ml","preco":69.9,"categoria":"Acessórios","estoque":10,"tamanhos":["Único"],"imagem":"https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&q=80","descricao":"Mantém a bebida gelada por horas. Tampa antivazamento."},
+  {"id":"ACE-LUV-001","nome":"Luvas de Treino","preco":59.9,"categoria":"Acessórios","estoque":8,"tamanhos":["P","M","G"],"imagem":"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80","descricao":"Proteção e pegada firme para a musculação, com palma acolchoada."}
+]
