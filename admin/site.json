@@ -1,0 +1,5 @@
+"layout": [
+  { "id": "sec-ab12cd", "tipo": "banner", "ativo": true, "titulo": "" },
+  { "id": "sec-ef34gh", "tipo": "destaques", "ativo": true, "titulo": "Em destaque", "quantidade": 8 },
+  { "id": "sec-ij56kl", "tipo": "beneficios", "ativo": false, "titulo": "", "conteudo": "Frete grátis acima de R$ 400\nTroca em até 7 dias" }
+]
