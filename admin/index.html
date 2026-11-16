@@ -285,4 +285,399 @@ function render(){const T=TABS.filter(t=>t[3].includes(role));if(!T.find(t=>t[0]
 (async()=>{document.documentElement.dataset.theme=LS.g(K.theme,matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');db=LS.g(K.db,null);
 if(!db){const old={site:LS.g('mauy_site',null),products:LS.g('mauy_produtos',null),orders:LS.g('mauy_pedidos',null)};if(old.site||old.products){db={site:old.site||{},products:old.products||[],orders:[]};ensure();render()}else{ensure();render();await pull(true)}}
 else{ensure();render();if(gOk()&&!dirty)await pull(true)}})();
-</script></body></html>
+</script><script id="mauy-modulos">
+'use strict';
+/* =====================================================================
+   MÓDULOS MAUY v2 — camada adicional sobre o painel (não altera o núcleo)
+   1) Importação em lote (CSV/XLSX)   2) Construtor de seções da home
+   3) Produtividade: Ctrl+S, Ctrl+Z (undo), alerta de conflito no GitHub
+   ===================================================================== */
+
+/* ---------- utilidades locais ---------- */
+const clean = s => String(s ?? '').replace(/<[^>]*>/g, '').trim();          // remove tags (anti-XSS na entrada)
+const col   = (x, d) => /^#[0-9a-f]{3,8}$/i.test(x || '') ? x : d;           // só aceita cor hex válida
+const num   = s => {                                                          // "R$ 1.299,90" | "99.9" → número
+  s = String(s ?? '').replace(/[R$\s]/g, '');
+  if (!s) return null;
+  if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+};
+const list = (s, sep = /[|;,\/]/) => String(s).split(sep).map(clean).filter(Boolean);
+
+/* =====================================================================
+   1. IMPORTAÇÃO EM LOTE
+   ===================================================================== */
+const FIELDS = {
+  produtos: [
+    ['sku', 'SKU', ['sku', 'codigo', 'cod', 'referencia', 'ref']],
+    ['nome', 'Nome', ['nome', 'produto', 'titulo']],
+    ['categoria', 'Categoria', ['categoria']],
+    ['subcategoria', 'Subcategoria', ['subcategoria', 'sub categoria', 'subcat']],
+    ['preco', 'Preço', ['preco', 'valor', 'preco venda', 'price']],
+    ['precoAntigo', 'Preço antigo', ['preco antigo', 'preco original', 'preco de', 'de']],
+    ['estoque', 'Estoque', ['estoque', 'qtd', 'quantidade', 'saldo']],
+    ['tamanhos', 'Tamanhos', ['tamanhos', 'tamanho', 'grade']],
+    ['cores', 'Cores', ['cores', 'cor']],
+    ['ativo', 'Ativo', ['ativo', 'status', 'visivel']]
+  ],
+  clientes: [
+    ['nome', 'Nome', ['nome', 'cliente']],
+    ['whatsapp', 'WhatsApp', ['whatsapp', 'telefone', 'celular', 'fone']],
+    ['email', 'E-mail', ['email', 'e-mail']],
+    ['tamanhos', 'Tamanhos', ['tamanhos', 'tamanho']],
+    ['pref', 'Preferências', ['preferencias', 'pref', 'obs']],
+    ['tags', 'Tags', ['tags', 'tag', 'segmento']]
+  ]
+};
+const TPL = {
+  produtos: [
+    ['SKU', 'Nome', 'Categoria', 'Subcategoria', 'Preço', 'Preço antigo', 'Estoque', 'Tamanhos', 'Cores', 'Ativo'],
+    ['FEM-TOP-001', 'Top Essencial Fio', 'Feminina', 'Top', '99,90', '129,90', '10', 'PP,P,M,G,GG', 'Preto:#000000|Branco:#ffffff', 'sim'],
+    ['ACE-LUV-001', 'Luva MAUY', 'Acessórios', 'Luva', '59,90', '', '1', 'U', 'Rosé:#ffdbd8', 'sim']
+  ],
+  clientes: [
+    ['Nome', 'WhatsApp', 'E-mail', 'Tamanhos', 'Preferências', 'Tags'],
+    ['Maria Souza', '47999998888', 'maria@email.com', 'M', 'Gosta de tons neutros', 'VIP,Nova'],
+    ['Ana Lima', '47988887777', '', 'P', '', 'Atacado']
+  ]
+};
+const IM = { kind: 'produtos', mode: 'upsert', headers: [], rows: [], map: {} };
+
+/* Decodificação automática: tenta UTF-8 estrito; se falhar, ISO-8859-1 */
+function decode(buf) {
+  try { return new TextDecoder('utf-8', { fatal: true }).decode(buf); }
+  catch { return new TextDecoder('iso-8859-1').decode(buf); }
+}
+/* Parser CSV com aspas, quebras de linha em células e delimitador ; ou , detectado */
+function parseCSV(text) {
+  text = text.replace(/^\ufeff/, '');
+  const first = text.split(/\r?\n/)[0];
+  const d = (first.match(/;/g) || []).length >= (first.match(/,/g) || []).length ? ';' : ',';
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) {
+      if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+      else if (c === '"') q = false;
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === d) { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') {
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(cell); rows.push(row); row = []; cell = '';
+    } else cell += c;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  return rows;
+}
+/* SheetJS carregado sob demanda (versão fixa, CDN permitido) */
+async function loadXLSX() {
+  if (window.XLSX) return;
+  await new Promise((ok, no) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = ok;
+    s.onerror = () => no(Error('Não consegui carregar a biblioteca de Excel. Use um arquivo .csv.'));
+    document.head.append(s);
+  });
+}
+async function readSheet(f) {
+  if (!f) return;
+  try {
+    const buf = await f.arrayBuffer();
+    let aoa;
+    if (/\.xlsx?$/i.test(f.name)) {
+      await loadXLSX();
+      const wb = XLSX.read(buf, { type: 'array' });
+      aoa = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: false, defval: '' });
+    } else aoa = parseCSV(decode(buf));
+    aoa = aoa.filter(r => r.some(c => String(c).trim()));
+    if (aoa.length < 2) throw Error('A planilha precisa ter o cabeçalho e ao menos uma linha.');
+    IM.headers = aoa[0].map(h => String(h).trim());
+    IM.rows = aoa.slice(1, 2001);
+    if (aoa.length > 2001) toast('Lidas as primeiras 2.000 linhas.', 'err');
+    IM.map = autoMap();
+    drawImp();
+  } catch (e) { toast(e.message, 'err'); }
+}
+/* Mapeamento automático por nome de coluna (exato primeiro, depois "contém") */
+function autoMap() {
+  const H = IM.headers.map(nz), m = {};
+  FIELDS[IM.kind].forEach(([k, , syn]) => {
+    let i = H.findIndex(h => syn.includes(h));
+    if (i < 0) i = H.findIndex(h => syn.some(s => s.length > 3 && h.includes(s)));
+    m[k] = i;
+  });
+  return m;
+}
+/* Reconstrói variantes ("Cor|Tam" → qtd) e o estoque total */
+function rebuild(p, total) {
+  const cs = (p.cores?.length ? p.cores : [{ nome: 'Único' }]).map(c => c.nome);
+  const sz = p.tamanhos?.length ? p.tamanhos : ['Único'];
+  const keys = cs.flatMap(c => sz.map(s => c + '|' + s)), old = p.variantes || {}, v = {};
+  if (total == null) keys.forEach(k => v[k] = old[k] || 0);
+  else { const b = Math.floor(total / keys.length); let r = total - b * keys.length; keys.forEach(k => v[k] = b + (r-- > 0 ? 1 : 0)); }
+  p.variantes = v;
+  p.estoque = Object.values(v).reduce((a, b) => a + b, 0);
+}
+
+/* ---- análise / validação (não altera o db) ---- */
+const cell = (r, f) => IM.map[f] == null || IM.map[f] < 0 ? '' : String(r[IM.map[f]] ?? '').trim();
+
+function analyzeProdutos() {
+  const idx = new Map(db.products.map((p, i) => [String(p.sku || '').toUpperCase(), i])), seen = new Set();
+  return IM.rows.map((r, n) => {
+    const it = { n: n + 2, errs: [], warns: [], patch: {} }, P = it.patch;
+    const sku = clean(cell(r, 'sku')).toUpperCase();
+    if (sku) { P.sku = sku; if (seen.has(sku)) it.errs.push('SKU duplicado na planilha'); seen.add(sku); }
+    it.ex = sku ? idx.get(sku) : undefined;
+    ['nome', 'categoria', 'subcategoria'].forEach(f => { const v = clean(cell(r, f)); if (v) P[f] = v; });
+    let raw = cell(r, 'preco');
+    if (raw) { const v = num(raw); v > 0 ? P.preco = v : it.errs.push('Preço inválido: ' + raw); }
+    raw = cell(r, 'precoAntigo');
+    if (raw) { const v = num(raw); v > 0 ? P.precoAntigo = v : it.errs.push('Preço antigo inválido: ' + raw); }
+    raw = cell(r, 'estoque');
+    if (raw) { const v = num(raw); Number.isInteger(v) && v >= 0 ? P.estoque = v : it.errs.push('Estoque inválido: ' + raw); }
+    raw = cell(r, 'tamanhos'); if (raw) P.tamanhos = list(raw).map(s => s.toUpperCase());
+    raw = cell(r, 'cores');
+    if (raw) P.cores = list(raw, /[|;]/).map(c => { const [nome, hex] = c.split(':'); return { nome: clean(nome), hex: col((hex || '').trim(), '#cccccc') }; });
+    raw = cell(r, 'ativo');
+    if (raw) {
+      if (/^(sim|s|1|true|ativo|visivel|visível)$/i.test(raw)) P.ativo = true;
+      else if (/^(nao|não|n|0|false|oculto|inativo)$/i.test(raw)) P.ativo = false;
+      else it.warns.push('Valor de “Ativo” não reconhecido');
+    }
+    const ex = it.ex !== undefined ? db.products[it.ex] : null, preco = P.preco ?? ex?.preco;
+    if (!ex) {
+      if (!P.nome) it.errs.push('Nome obrigatório');
+      if (P.preco == null && !it.errs.some(e => e.startsWith('Preço inv'))) it.errs.push('Preço obrigatório');
+      if (!sku) it.warns.push('SKU será gerado automaticamente');
+    }
+    if (P.precoAntigo && preco && P.precoAntigo <= preco) it.errs.push('Preço antigo deve ser maior que o preço');
+    it.status = it.errs.length ? 'erro' : ex ? (IM.mode === 'novos' ? 'ignorado' : 'atualiza') : 'novo';
+    return it;
+  });
+}
+function analyzeClientes() {
+  const keyOf = c => digits(c.whatsapp) || String(c.email || '').toLowerCase();
+  const idx = new Map(db.customers.map((c, i) => [keyOf(c), i])), seen = new Set();
+  return IM.rows.map((r, n) => {
+    const it = { n: n + 2, errs: [], warns: [], patch: {} }, P = it.patch;
+    ['nome', 'tamanhos', 'pref'].forEach(f => { const v = clean(cell(r, f)); if (v) P[f] = v; });
+    const wa = digits(cell(r, 'whatsapp')), em = clean(cell(r, 'email')).toLowerCase();
+    if (wa) { wa.length >= 10 && wa.length <= 13 ? P.whatsapp = wa : it.errs.push('WhatsApp inválido'); }
+    if (em) { /^\S+@\S+\.\S+$/.test(em) ? P.email = em : it.errs.push('E-mail inválido'); }
+    const t = cell(r, 'tags'); if (t) P.tags = list(t);
+    const key = wa || em;
+    if (key) { if (seen.has(key)) it.errs.push('Cliente duplicado na planilha'); seen.add(key); }
+    it.ex = key ? idx.get(key) : undefined;
+    if (it.ex === undefined && !P.nome) it.errs.push('Nome obrigatório');
+    it.status = it.errs.length ? 'erro' : it.ex !== undefined ? (IM.mode === 'novos' ? 'ignorado' : 'atualiza') : 'novo';
+    return it;
+  });
+}
+const analyze = () => IM.kind === 'produtos' ? analyzeProdutos() : analyzeClientes();
+
+/* ---- aplicação no estado (db) ---- */
+function applyProduto(it) {
+  const q = it.patch;
+  if (it.ex !== undefined) {
+    const p = db.products[it.ex], { estoque, ...rest } = q;
+    Object.assign(p, rest);
+    if (estoque != null || rest.tamanhos || rest.cores) rebuild(p, estoque);
+    return;
+  }
+  const p = {
+    id: 'PRD-' + Math.random().toString(36).slice(2, 10).toUpperCase(), nome: q.nome, sku: q.sku || '',
+    categoria: q.categoria || '', subcategoria: q.subcategoria || '', preco: q.preco, tamanhos: q.tamanhos || [],
+    cores: q.cores || [], fotos: [], variantes: {}, badges: [], estoqueMinimo: 3, ativo: q.ativo ?? true,
+    descricao: '', tecido: '', guia: '', video: '', slug: slug(q.nome), metaTitle: '', metaDesc: '', estoque: 0, imagem: ''
+  };
+  if (q.precoAntigo) p.precoAntigo = q.precoAntigo;
+  if (!p.sku) p.sku = genSku(p);
+  rebuild(p, q.estoque ?? 0);
+  db.products.push(p);
+}
+function applyCliente(it) {
+  if (it.ex !== undefined) return void Object.assign(db.customers[it.ex], it.patch);
+  db.customers.push({ id: 'CLI-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), nome: '', whatsapp: '', email: '', tamanhos: '', pref: '', tags: [], ...it.patch });
+}
+
+/* ---- telas ---- */
+V.imp = () => head('Importar planilha', 'Importe produtos ou clientes em lote a partir de .csv ou .xlsx, com validação antes de salvar.') +
+  `<section class="card"><div class="fg">
+    <div class="f"><label>O que importar</label><select data-imp="kind"><option value="produtos">Produtos</option><option value="clientes">Clientes</option></select></div>
+    <div class="f"><label>Modo de operação</label><select data-imp="mode"><option value="upsert">Atualizar existentes (por SKU/contato) e criar novos</option><option value="novos">Apenas adicionar novos</option></select></div>
+    <div class="f"><label>Arquivo (.csv, .xlsx)</label><input type="file" id="impf" accept=".csv,.txt,.xlsx,.xls"></div>
+    <div class="f"><label>Planilha modelo com exemplos</label><div class="row"><button class="btn sec sm" data-act="tplCsv">Baixar .csv</button><button class="btn sec sm" data-act="tplXlsx">Baixar .xlsx</button></div></div>
+  </div></section><div id="impbody"></div>`;
+
+function drawImp() {
+  $('[data-imp=kind]').value = IM.kind; $('[data-imp=mode]').value = IM.mode;
+  if (!IM.rows.length) { $('#impbody').innerHTML = '<p class="muted">Escolha um arquivo para começar. Campos em branco não apagam dados existentes.</p>'; return; }
+  const opts = s => `<option value="-1">— ignorar —</option>` + IM.headers.map((h, i) => `<option value="${i}" ${s === i ? 'selected' : ''}>${esc(h || 'Coluna ' + (i + 1))}</option>`).join('');
+  $('#impbody').innerHTML = `<section class="card"><h2>1. Mapeamento de colunas</h2><p class="sub">Vincule cada campo do sistema a uma coluna da planilha (${IM.rows.length} linhas lidas).</p>
+    <div class="fg fg3">${FIELDS[IM.kind].map(([k, l]) => `<div class="f"><label>${l}</label><select data-imp-map="${k}">${opts(IM.map[k])}</select></div>`).join('')}</div></section>
+    <section class="card" id="imppv"></section>`;
+  drawImpPV();
+}
+function drawImpPV() {
+  const items = IM._items = analyze(), cnt = s => items.filter(i => i.status === s).length, ok = cnt('novo') + cnt('atualiza');
+  const cols = FIELDS[IM.kind].filter(([k]) => IM.map[k] >= 0).slice(0, 6);
+  const pill = { novo: 'ok', atualiza: 'wa', ignorado: '', erro: 'er' }, lbl = { novo: 'Novo', atualiza: 'Atualiza', ignorado: 'Ignorado', erro: 'Erro' };
+  $('#imppv').innerHTML = `<h2>2. Pré-visualização</h2><p class="sub">
+    <span class="pill ok">${cnt('novo')} novos</span><span class="pill wa">${cnt('atualiza')} atualizações</span><span class="pill">${cnt('ignorado')} ignorados</span><span class="pill er">${cnt('erro')} com erro</span></p>
+    <div class="tw"><table><thead><tr><th>Linha</th><th>Situação</th>${cols.map(([, l]) => `<th>${l}</th>`).join('')}<th>Avisos</th></tr></thead><tbody>
+    ${items.slice(0, 300).map(it => `<tr ${it.status === 'erro' ? 'style="background:color-mix(in srgb,var(--err) 12%,transparent)"' : ''}><td>${it.n}</td><td><span class="pill ${pill[it.status]}">${lbl[it.status]}</span></td>
+      ${cols.map(([k]) => `<td>${esc(Array.isArray(it.patch[k]) ? it.patch[k].map(x => x.nome || x).join(', ') : it.patch[k] ?? '—')}</td>`).join('')}
+      <td>${esc([...it.errs, ...it.warns].join(' · '))}</td></tr>`).join('')}</tbody></table></div>
+    ${items.length > 300 ? `<p class="muted">Mostrando 300 de ${items.length} linhas (todas serão processadas).</p>` : ''}
+    <div class="row" style="margin-top:14px"><button class="btn" data-act="impOk" ${ok ? '' : 'disabled'}>Importar ${ok} linha(s) válida(s)</button><span class="muted">Linhas com erro nunca são importadas. Você ainda poderá desfazer (Ctrl+Z) e precisará publicar.</span></div>`;
+}
+
+/* =====================================================================
+   2. CONSTRUTOR DE SEÇÕES DA HOME  →  site.layout[]
+   Schema de cada bloco: { id, tipo, ativo, titulo, quantidade?, conteudo? }
+   ===================================================================== */
+const LT = {
+  banner:      ['Banner principal / carrossel', '🖼', 'Usa os banners ativos de “Conteúdo e marca”.'],
+  destaques:   ['Carrossel de produtos em destaque', '★', 'Produtos marcados como destaque.'],
+  categorias:  ['Grade por categoria', '▦', 'Uma categoria por linha.'],
+  bannerDuplo: ['Banner duplo promocional', '◧', 'Duas linhas no formato: Título|Link|Imagem'],
+  lookbook:    ['Lookbook / galeria de fotos', '▤', 'Um caminho de foto (img/...) ou URL por linha.'],
+  video:       ['Vídeo manifesto', '▶', 'Link do YouTube/Vimeo ou arquivo de vídeo.'],
+  depoimentos: ['Depoimentos', '❝', 'Uma linha por depoimento: Nome|Texto'],
+  beneficios:  ['Barra de benefícios', '✔', 'Um benefício por linha.']
+};
+const bid = () => 'sec-' + Math.random().toString(36).slice(2, 8);
+const defaultLayout = s => [
+  { id: bid(), tipo: 'banner', ativo: true, titulo: '' },
+  { id: bid(), tipo: 'destaques', ativo: true, titulo: s.destaques?.titulo || 'Em destaque', quantidade: s.destaques?.quantidade || 8 },
+  { id: bid(), tipo: 'beneficios', ativo: true, titulo: '', conteudo: `Frete grátis acima de ${brl(s.frete?.gratisAcima)}\nTroca em até 7 dias\n3x sem juros` }
+];
+const lay = () => db.site.layout;
+
+V.lay = () => head('Layout da home', 'Monte a vitrine: adicione, duplique, oculte e reordene (arraste pela alça ⋮⋮) as seções da página inicial.',
+  `<div class="seg"><button data-act="dev" data-v="d" class="${dev === 'd' ? 'on' : ''}">Desktop</button><button data-act="dev" data-v="m" class="${dev === 'm' ? 'on' : ''}">Mobile</button></div>`) +
+  `<section class="card"><h2>Pré-visualização na ordem exata</h2><div id="laypv"></div></section>
+  <section class="card"><div class="row" style="justify-content:space-between"><h2>Seções</h2>
+    <div class="row"><select id="lnew">${Object.entries(LT).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select><button class="btn" data-act="ladd">＋ Adicionar seção</button></div></div>
+  ${lay().map((b, i) => `<div class="bn" draggable="true" data-ldrag="${i}"><div class="bn-h"><span class="hdl">⋮⋮</span><b>${LT[b.tipo][1]} ${LT[b.tipo][0]}</b>
+    <span class="row" style="margin-left:auto"><span class="pill ${b.ativo !== false ? 'ok' : 'er'}">${b.ativo !== false ? 'Visível' : 'Oculta'}</span>
+    <button class="btn ghost sm" data-act="ltog" data-i="${i}">${b.ativo !== false ? 'Ocultar' : 'Exibir'}</button>
+    <button class="btn ghost sm" data-act="lmove" data-i="${i}" data-d="-1">↑</button><button class="btn ghost sm" data-act="lmove" data-i="${i}" data-d="1">↓</button>
+    <button class="btn ghost sm" data-act="ldup" data-i="${i}">Duplicar</button><button class="btn dan sm" data-act="ldel" data-i="${i}">Excluir</button></span></div>
+    <div class="fg">${inp('Título da seção', `site.layout.${i}.titulo`)}
+    ${b.tipo === 'destaques' ? inp('Quantidade de produtos', `site.layout.${i}.quantidade`, { t: 'number', a: 'min=1 max=24' }) : ''}
+    ${b.tipo !== 'banner' && b.tipo !== 'destaques' ? inp('Conteúdo', `site.layout.${i}.conteudo`, { t: 'ta', full: true, rows: 3, h: LT[b.tipo][2] }) : `<small class="muted">${LT[b.tipo][2]}</small>`}</div></div>`).join('') || '<p class="muted">Nenhuma seção. Adicione a primeira.</p>'}</section>`;
+
+/* Preview: reflete ordem, cores, fonte e banners reais */
+function layPV() {
+  const s = db.site, c = s.tema?.cores || {}, bg = col(c.fundo, '#f5f1eb'), tx = col(c.texto, '#29292b'), ac = col(c.destaque, '#59283b'), cd = col(c.cartao, '#ece5db');
+  const ban = s.banners.find(b => b.ativo !== false), img = dev === 'm' ? (ban?.mobile || ban?.desktop || ban?.imagem) : (ban?.desktop || ban?.imagem || ban?.mobile);
+  const box = (h, t) => `<div style="padding:14px 12px">${t ? `<div style="font-weight:600;margin-bottom:8px">${esc(t)}</div>` : ''}${h}</div>`;
+  const sq = n => `<div style="display:grid;grid-template-columns:repeat(${dev === 'm' ? 2 : 4},1fr);gap:6px">${Array.from({ length: n }, () => `<div style="aspect-ratio:3/4;background:${cd};border-radius:6px"></div>`).join('')}</div>`;
+  const lines = b => String(b.conteudo || '').split('\n').filter(Boolean);
+  const PV = {
+    banner: () => `<div style="height:${dev === 'm' ? 200 : 170}px;background:${img ? `center/cover url('${esc(u(img))}')` : ac};color:#fff;display:flex;align-items:end;padding:14px;font-weight:600;text-shadow:0 1px 6px #0008">${esc(ban?.titulo || 'Banner principal')}</div>`,
+    destaques: b => box(sq(Math.min(b.quantidade || 4, dev === 'm' ? 4 : 4)), b.titulo),
+    categorias: b => box(`<div style="display:flex;flex-wrap:wrap;gap:6px">${(lines(b).length ? lines(b) : ['Categoria']).map(x => `<span style="background:${cd};padding:8px 12px;border-radius:8px">${esc(x)}</span>`).join('')}</div>`, b.titulo),
+    bannerDuplo: b => box(`<div style="display:grid;grid-template-columns:${dev === 'm' ? '1fr' : '1fr 1fr'};gap:6px">${[0, 1].map(i => `<div style="height:80px;background:${cd};border-radius:8px;display:grid;place-items:center">${esc((lines(b)[i] || '').split('|')[0] || 'Promoção')}</div>`).join('')}</div>`, b.titulo),
+    lookbook: b => box(sq(3), b.titulo),
+    video: b => box(`<div style="aspect-ratio:16/9;background:#222;color:#fff;border-radius:8px;display:grid;place-items:center;font-size:28px">▶</div>`, b.titulo),
+    depoimentos: b => box(`<i>“${esc((lines(b)[0] || 'Nome|Depoimento').split('|').pop())}”</i>`, b.titulo),
+    beneficios: b => `<div style="background:${ac};color:${col(c.destaqueTexto, '#fff')};padding:10px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:11px">${lines(b).map(x => `<span>${esc(x)}</span>`).join('')}</div>`
+  };
+  $('#laypv').innerHTML = `<div style="width:${dev === 'm' ? '360px' : '100%'};max-width:100%;margin:auto;background:${bg};color:${tx};font-family:${esc(s.marca.fonte)},sans-serif;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12px">
+    <div style="background:${col(s.avisos?.cor, ac)};color:#fff;text-align:center;padding:6px;font-size:11px">${esc(s.avisos?.texto || '')}</div>
+    ${lay().filter(b => b.ativo !== false).map(b => PV[b.tipo]?.(b) || '').join('')}</div>`;
+}
+Object.assign(A, {
+  ladd() { const t = $('#lnew').value; lay().push({ id: bid(), tipo: t, ativo: true, titulo: LT[t][0], ...(t === 'destaques' ? { quantidade: 8 } : {}) }); persist(1); render(); },
+  ltog(d) { const b = lay()[+d.i]; b.ativo = b.ativo === false; persist(1); render(); },
+  ldup(d) { const b = JSON.parse(JSON.stringify(lay()[+d.i])); b.id = bid(); lay().splice(+d.i + 1, 0, b); persist(1); render(); },
+  ldel(d) { if (confirm('Excluir esta seção?')) { lay().splice(+d.i, 1); persist(1); render(); } },
+  lmove(d) { const a = lay(), i = +d.i, j = i + +d.d; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; persist(1); render(); },
+  tplCsv() { dl(`modelo-${IM.kind}.csv`, csv(TPL[IM.kind]), 'text/csv'); },
+  async tplXlsx() {
+    try { await loadXLSX(); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(TPL[IM.kind]), 'Modelo'); XLSX.writeFile(wb, `modelo-${IM.kind}.xlsx`); }
+    catch (e) { toast(e.message, 'err'); }
+  },
+  impOk() {
+    const ok = (IM._items || []).filter(i => i.status === 'novo' || i.status === 'atualiza');
+    if (!ok.length) return;
+    ok.forEach(IM.kind === 'produtos' ? applyProduto : applyCliente);
+    log(`Importou ${ok.length} ${IM.kind} via planilha`);
+    persist(1); IM.rows = []; IM.headers = [];
+    toast(`${ok.length} registro(s) importados. Revise e publique.`); render();
+  },
+  undo() { undo(); }
+});
+
+/* Drag & drop das seções (independente do drag dos banners) */
+let ldr = null;
+document.addEventListener('dragstart', e => { const b = e.target.closest?.('[data-ldrag]'); if (b) ldr = +b.dataset.ldrag; });
+document.addEventListener('dragover', e => { const b = e.target.closest?.('[data-ldrag]'); if (b && ldr !== null) { e.preventDefault(); $$('[data-ldrag]').forEach(x => x.classList.remove('over')); b.classList.add('over'); } });
+document.addEventListener('drop', e => {
+  const b = e.target.closest?.('[data-ldrag]'); if (!b || ldr === null) return;
+  e.preventDefault(); const j = +b.dataset.ldrag, [x] = lay().splice(ldr, 1); lay().splice(j, 0, x); ldr = null; persist(1); render();
+});
+document.addEventListener('dragend', () => { ldr = null; });
+document.addEventListener('input', e => { if (tab === 'lay' && e.target.dataset.b) layPV(); });   // preview ao vivo, sem perder foco
+document.addEventListener('change', async e => {
+  const t = e.target;
+  if (t.dataset.imp === 'kind') { IM.kind = t.value; IM.map = IM.rows.length ? autoMap() : {}; drawImp(); }
+  else if (t.dataset.imp === 'mode') { IM.mode = t.value; if (IM.rows.length) drawImpPV(); }
+  else if (t.dataset.impMap) { IM.map[t.dataset.impMap] = +t.value; drawImpPV(); }
+  else if (t.id === 'impf') { await readSheet(t.files[0]); t.value = ''; }
+});
+
+/* =====================================================================
+   3. PRODUTIVIDADE: undo em memória, atalhos e conflito de commit
+   ===================================================================== */
+const snap = () => JSON.stringify(db), undoStack = []; let lastSnap = null, lastPush = 0, snapTimer = 0, headSha = null;
+const _persist = persist;
+persist = function (now) {
+  if (lastSnap && Date.now() - lastPush > 1200) { undoStack.push(lastSnap); if (undoStack.length > 25) undoStack.shift(); lastPush = Date.now(); }  // agrupa digitação rápida
+  _persist(now);
+  clearTimeout(snapTimer); snapTimer = setTimeout(() => { lastSnap = snap(); }, 1300);
+};
+function undo() {
+  if (!undoStack.length) return toast('Nada para desfazer.', 'err');
+  db = JSON.parse(undoStack.pop()); ensure(); lastSnap = snap();
+  dirty = true; LS.s(K.dirty, true); LS.s(K.db, db); render(); toast('Última alteração desfeita');
+}
+async function readHead() { if (!gOk()) return null; try { return (await gj('/git/ref/heads/' + gh.branch)).object.sha; } catch { return null; } }
+/* Publica avisando se o branch remoto mudou desde que o painel foi aberto/atualizado */
+async function publishSafe() {
+  if (gOk()) {
+    const h = await readHead();
+    if (headSha && h && h !== headSha && !confirm('⚠ O repositório recebeu outro commit desde que você abriu o painel. Publicar agora pode sobrescrever essas mudanças em site.json/produtos.json. Continuar mesmo assim?')) return;
+  }
+  await publish();
+  if (!dirty) headSha = await readHead();
+}
+const _pull = pull;
+pull = async function (silent) { await _pull(silent); headSha = await readHead(); };
+document.addEventListener('keydown', e => {
+  const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
+  if (mod && k === 's') { e.preventDefault(); publishSafe(); }
+  else if (mod && k === 'z' && !e.shiftKey && !e.target.closest('input,textarea,[contenteditable]')) { e.preventDefault(); undo(); }
+});
+
+/* ---------- integração com o núcleo ---------- */
+const _ensure = ensure;
+ensure = function () { _ensure(); if (!Array.isArray(db.site.layout)) db.site.layout = defaultLayout(db.site); };
+const _render = render;
+render = function () { _render(); if (tab === 'imp') drawImp(); if (tab === 'lay') layPV(); };
+TABS.splice(TABS.findIndex(t => t[0] === 'prod') + 1, 0, ['imp', 'Importar planilha', '⇪', ['admin', 'operador']]);
+TABS.splice(TABS.findIndex(t => t[0] === 'vis') + 1, 0, ['lay', 'Layout da home', '☷', ['admin']]);
+$('#pub').onclick = publishSafe;
+$('#theme').insertAdjacentHTML('beforebegin', '<button class="btn ghost" data-act="undo" title="Desfazer (Ctrl+Z)">↶ Desfazer</button>');
+ensure(); render();
+setTimeout(() => { lastSnap = snap(); }, 1500);
+readHead().then(h => { headSha ??= h; });
+</script>
+
+</body></html>
