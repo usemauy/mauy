@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAUY Fitness | Moda Fitness & Lifestyle</title>
+    <!-- Tailwind CSS CDN para estilização limpa e moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        mauy: { 50: '#fdf4f5', 500: '#e11d48', 600: '#be123c', 700: '#9f1239' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- TopBar Promocional -->
+    <div class="bg-zinc-900 text-white text-xs py-2 px-4 text-center font-medium">
+        ✨ Frete Grátis nas compras acima de R$ 250,00 | 5% OFF pagando no PIX
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <a href="#" class="text-xl font-black tracking-widest uppercase text-zinc-900 dark:text-white">MAUY</a>
+                <nav class="hidden md:flex gap-6 text-sm font-medium">
+                    <a href="#vitrine" class="hover:text-mauy-500 transition">Lançamentos</a>
+                    <a href="#vitrine" class="hover:text-mauy-500 transition">Leggings</a>
+                    <a href="#vitrine" class="hover:text-mauy-500 transition">Tops & Sports</a>
+                    <a href="#vitrine" class="hover:text-mauy-500 transition">Shorts</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="toggleAdminModal()" class="hidden sm:flex items-center gap-1 text-xs bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition">
+                    <i class="fa-solid fa-lock text-[10px]"></i> Admin
+                </button>
+                <button onclick="toggleCartDrawer()" class="relative p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute top-0 right-0 bg-mauy-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative bg-zinc-100 dark:bg-zinc-900 py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-xs uppercase tracking-widest font-bold text-mauy-500 mb-3 block">Nova Coleção Essence</span>
+            <h1 class="text-3xl md:text-5xl font-black tracking-tight mb-4">Performance & Elegância para o seu Treino</h1>
+            <p class="text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto mb-8 text-sm md:text-base">Peças desenvolvidas com alta compressão, toque macio e zero transparência para acompanhar todos os seus movimentos.</p>
+            <a href="#vitrine" class="inline-block bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-semibold px-8 py-3 rounded-full text-sm hover:opacity-90 transition shadow-lg">Ver Coleção</a>
+        </div>
+    </section>
+
+    <!-- Vitrine de Produtos -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full" id="vitrine">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold tracking-tight">Destaques da Semana</h2>
+            <div class="text-sm text-zinc-500" id="product-count">Carregando peças...</div>
+        </div>
+        
+        <!-- Grid de Produtos -->
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <!-- Os produtos serão injetados via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 py-8 text-center text-xs text-zinc-500">
+        <p>&copy; 2026 MAUY Fitness. Todos os direitos reservados.</p>
+        <p class="mt-2">
+            <a href="#" onclick="toggleAdminModal(); return false;" class="underline hover:text-zinc-800 dark:hover:text-zinc-300">Acesso ao Painel Administrativo</a>
+        </p>
+    </footer>
+
+    <!-- Modal do Carrinho / Sacola Lateral -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white dark:bg-zinc-900 shadow-2xl flex flex-col">
+                <div class="p-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                    <h3 class="font-bold text-base">Sua Sacola (<span id="cart-count-title">0</span>)</h3>
+                    <button onclick="toggleCartDrawer()" class="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Itens do carrinho -->
+                </div>
+                <div class="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 space-y-3">
+                    <div class="flex justify-between text-sm font-medium">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">R$ 0,00</span>
+                    </div>
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Finalizar Pedido via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do Painel Administrativo -->
+    <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-zinc-900 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+            <div class="p-5 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50">
+                <h3 class="font-bold text-lg flex items-center gap-2"><i class="fa-solid fa-gear text-mauy-500"></i> Painel Administrativo MAUY</h3>
+                <button onclick="toggleAdminModal()" class="p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800 rounded-full"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+                <div>
+                    <h4 class="font-bold text-sm mb-3">Adicionar Novo Produto</h4>
+                    <form id="product-form" onsubmit="handleSaveProduct(event)" class="space-y-3">
+                        <input type="text" id="admin-title" placeholder="Nome da Peça (ex: Legging Essence High)" required class="w-full p-3 text-sm border rounded-xl dark:bg-zinc-800 dark:border-zinc-700">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="number" step="0.01" id="admin-price" placeholder="Preço (R$)" required class="p-3 text-sm border rounded-xl dark:bg-zinc-800 dark:border-zinc-700">
+                            <input type="text" id="admin-image" placeholder="URL da Foto do Produto" required class="p-3 text-sm border rounded-xl dark:bg-zinc-800 dark:border-zinc-700">
+                        </div>
+                        <button type="submit" class="w-full bg-mauy-500 hover:bg-mauy-600 text-white font-bold py-3 rounded-xl transition text-sm">Salvar e Publicar Produto</button>
+                    </form>
+                </div>
+                <hr class="border-zinc-200 dark:border-zinc-800">
+                <div>
+                    <h4 class="font-bold text-sm mb-3">Produtos Cadastrados</h4>
+                    <div id="admin-products-list" class="space-y-2">
+                        <!-- Lista para gerenciar/excluir -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Gestão e Vitrine -->
+    <script>
+        // Banco de dados local padrão (inicial)
+        let products = JSON.parse(localStorage.getItem('mauy_products')) || [
+            { id: 1, title: 'Legging High Compression Essence', price: 189.90, image: 'https://images.unsplash.com/photo-1506152983158-b4a74a01c721?auto=format&fit=crop&q=80&w=800' },
+            { id: 2, title: 'Top Deportivo Minimal', price: 99.90, image: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=800' },
+            { id: 3, title: 'Shorts Modal Comfort', price: 119.90, image: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=800' },
+            { id: 4, title: 'Macacão Fitness Sculpt', price: 239.90, image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800' }
+        ];
+
+        let cart = [];
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const count = document.getElementById('product-count');
+            count.innerText = `${products.length} peças disponíveis`;
+            
+            grid.innerHTML = products.map(p => `
+                <div class="group bg-zinc-50 dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 flex flex-col">
+                    <div class="aspect-[3/4] overflow-hidden bg-zinc-200 dark:bg-zinc-800 relative">
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-4 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="font-medium text-sm mb-1 line-clamp-1">${p.title}</h3>
+                            <p class="font-bold text-base text-mauy-500">R$ ${p.price.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                        <button onclick="addToCart(${p.id})" class="mt-4 w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-semibold py-2.5 rounded-xl text-xs hover:opacity-90 transition">
+                            Adicionar à Sacola
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            renderAdminList();
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const countTitle = document.getElementById('cart-count-title');
+            const itemsContainer = document.getElementById('cart-items');
+            const subtotalEl = document.getElementById('cart-subtotal');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (totalCount > 0) {
+                badge.classList.remove('hidden');
+                badge.innerText = totalCount;
+            } else {
+                badge.classList.add('hidden');
+            }
+            countTitle.innerText = totalCount;
+            subtotalEl.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `<p class="text-center text-zinc-500 py-8 text-sm">Sua sacola está vazia.</p>`;
+                return;
+            }
+
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                    <img src="${item.image}" class="w-12 h-14 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h4 class="text-xs font-medium line-clamp-1">${item.title}</h4>
+                        <p class="text-xs text-zinc-500">R$ ${item.price.toFixed(2).replace('.', ',')} x ${item.qty}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-zinc-400 hover:text-red-500 text-xs p-1"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function toggleAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function handleSaveProduct(e) {
+            e.preventDefault();
+            const title = document.getElementById('admin-title').value;
+            const price = parseFloat(document.getElementById('admin-price').value);
+            const image = document.getElementById('admin-image').value;
+
+            const newProduct = {
+                id: Date.now(),
+                title,
+                price,
+                image
+            };
+
+            products.unshift(newProduct);
+            localStorage.setItem('mauy_products', JSON.stringify(products));
+            renderProducts();
+            document.getElementById('product-form').reset();
+            alert('Produto cadastrado com sucesso!');
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Deseja excluir este produto?')) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('mauy_products', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('admin-products-list');
+            list.innerHTML = products.map(p => `
+                <div class="flex items-center justify-between bg-zinc-50 dark:bg-zinc-800/50 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-xs">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" class="w-8 h-8 object-cover rounded-md">
+                        <span class="font-medium line-clamp-1">${p.title}</span>
+                    </div>
+                    <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return;
+            let text = "Olá! Gostaria de fechar o seguinte pedido na MAUY Fitness:%0A%0A";
+            cart.forEach(item => {
+                text += `- ${item.qty}x ${item.title} (R$ ${(item.price * item.qty).toFixed(2)})%0A`;
+            });
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            text += `%0A*Total:* R$ ${total.toFixed(2)}`;
+            window.open(`https://wa.me/5548999999999?text=${text}`, '_blank');
+        }
+
+        // Inicializar a vitrine ao carregar a página
+        renderProducts();
+    </script>
+</body>
+</html>
