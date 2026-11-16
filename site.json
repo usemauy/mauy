@@ -94,8 +94,8 @@
   "ok": "Obrigada! Seu cadastro segue pelo WhatsApp — é só enviar a mensagem."
  },
  "frete": {
-  "gratisAcima": 400,
-  "postagem": 2,
+  "gratisAcima": 399.9,
+  "postagem": 5,
   "ativo": true,
   "retirada": {
    "ativo": true,
@@ -141,7 +141,13 @@
   "cookiesAtivo": true,
   "cookies": "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade (LGPD)."
  },
- "freteEstados": [],
+ "freteEstados": [
+  {
+   "uf": "SC",
+   "valor": 299.9,
+   "prazo": 2
+  }
+ ],
  "integracoes": {
   "pixTipo": "CPF/CNPJ",
   "pix": "60125410077",
@@ -179,5 +185,27 @@
    "desc": "Activewear de linhas essenciais, do treino à vida real.",
    "imagem": ""
   }
- }
+ },
+ "layout": [
+  {
+   "id": "sec-91z2a8",
+   "tipo": "banner",
+   "ativo": true,
+   "titulo": ""
+  },
+  {
+   "id": "sec-ctl2ou",
+   "tipo": "destaques",
+   "ativo": true,
+   "titulo": "Em destaque",
+   "quantidade": 8
+  },
+  {
+   "id": "sec-43o6b7",
+   "tipo": "beneficios",
+   "ativo": true,
+   "titulo": "",
+   "conteudo": "Frete grátis acima de R$ 400,00\nTroca em até 7 dias\n3x sem juros"
+  }
+ ]
 }
