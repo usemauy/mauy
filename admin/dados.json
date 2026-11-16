@@ -1,0 +1,152 @@
+{
+ "site": {
+  "aviso": "Frete grátis acima de R$ 400 · 3x sem juros",
+  "whatsapp": "5547900000000",
+  "gratis": 400,
+  "freteBase": 24.9,
+  "pix": 5,
+  "intervalo": 6000,
+  "frase": "Força em cada detalhe",
+  "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
+  "galTitulo": "Escolhas para o seu ritmo",
+  "galTexto": "Explore peças e acessórios da coleção.",
+  "cupons": [
+   {
+    "c": "MAUY10",
+    "p": 10
+   }
+  ]
+ },
+ "banners": [
+  {
+   "titulo": "Design que vai além do treino.",
+   "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+   "cta": "Descobrir a coleção",
+   "link": "#loja",
+   "imagem": ""
+  },
+  {
+   "titulo": "Força em cada detalhe.",
+   "texto": "Tecidos de toque suave, costuras planas e caimento que acompanha o movimento.",
+   "cta": "Ver novidades",
+   "link": "#loja",
+   "imagem": ""
+  }
+ ],
+ "galeria": [
+  {
+   "img": "",
+   "legenda": "Top Essence"
+  },
+  {
+   "img": "",
+   "legenda": "Legging Sculpt"
+  },
+  {
+   "img": "",
+   "legenda": "Conjunto Fluid"
+  },
+  {
+   "img": "",
+   "legenda": "Acessórios"
+  },
+  {
+   "img": "",
+   "legenda": "Short Contour"
+  }
+ ],
+ "produtos": [
+  {
+   "id": "p1",
+   "nome": "Top Alta Sustentação Essence",
+   "categoria": "Feminina",
+   "preco": 149.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "PP",
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Poliamida com elastano, forro duplo e toque macio. Costuras planas e alças que não marcam a pele.",
+   "ativo": true
+  },
+  {
+   "id": "p2",
+   "nome": "Legging Cós Alto Sculpt",
+   "categoria": "Feminina",
+   "preco": 219.9,
+   "precoAntigo": 259.9,
+   "imagens": [],
+   "tamanhos": [
+    "PP",
+    "P",
+    "M",
+    "G",
+    "GG"
+   ],
+   "descricao": "Compressão média, opaca e de secagem rápida, com cós alto sem costura aparente.",
+   "ativo": true
+  },
+  {
+   "id": "p3",
+   "nome": "Conjunto Fluid Lifestyle",
+   "categoria": "Feminina",
+   "preco": 329.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Top e legging em malha texturizada, com caimento suave para treino e rotina.",
+   "ativo": true
+  },
+  {
+   "id": "p4",
+   "nome": "Short Biker Contour",
+   "categoria": "Feminina",
+   "preco": 129.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Cintura alta, barra antideslizante e tecido leve que respira.",
+   "ativo": true
+  },
+  {
+   "id": "p5",
+   "nome": "Garrafa Térmica Studio",
+   "categoria": "Acessórios",
+   "preco": 89.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "Único"
+   ],
+   "descricao": "Aço inox com 600 ml, mantém a temperatura por até 12 horas.",
+   "ativo": true
+  },
+  {
+   "id": "p6",
+   "nome": "Camiseta Dry Performance",
+   "categoria": "Masculina",
+   "preco": 119.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G",
+    "GG"
+   ],
+   "descricao": "Malha de secagem rápida com ajuste atlético e acabamento macio.",
+   "ativo": true
+  }
+ ]
+}
