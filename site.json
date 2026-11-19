@@ -188,17 +188,19 @@
  },
  "layout": [
   {
-   "id": "sec-h8cldz",
+   "id": "sec-n3z0nx",
    "tipo": "banner",
    "ativo": true,
-   "titulo": "Banner principal / carrossel"
+   "titulo": "Banner principal / carrossel",
+   "imagem": "img/site/layout-0-imagem-1wawnmz19zr.jpg",
+   "imagemMobile": "img/site/layout-0-imagemmobile-2gics48m.svg"
   },
   {
-   "id": "sec-icotmr",
-   "tipo": "depoimentos",
+   "id": "sec-xditkp",
+   "tipo": "destaques",
    "ativo": true,
-   "titulo": "Depoimentos",
-   "conteudo": "Eu amooo demais 😎 "
+   "titulo": "Carrossel de produtos em destaque",
+   "quantidade": 8
   }
  ],
  "galeria": []
