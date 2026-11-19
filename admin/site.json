@@ -1,0 +1,50 @@
+
+{
+  "nome": "MAUY",
+  "whatsapp": "5547999999999",
+  "frete": {
+    "gratisAcima": 400,
+    "postagem": 2
+  },
+  "tema": {
+    "wine": "#59283B",
+    "nude": "#C5A99A"
+  },
+  "marca": {
+    "logoClaro": "img/site/logo-claro.png",
+    "logoEscuro": "img/site/logo-escuro.png",
+    "favicon": "img/site/favicon.png",
+    "cor1": "#59283B",
+    "cor2": "#C5A99A",
+    "fonte": "Poppins"
+  },
+  "avisos": {
+    "ativo": true,
+    "texto": "Frete grátis acima de R$ 400",
+    "cor": "#59283B"
+  },
+  "textos": {
+    "rodape": "MAUY Fitness",
+    "sobre": "",
+    "trocas": "",
+    "cookiesAtivo": true,
+    "cookies": ""
+  },
+  "freteEstados": [],
+  "integracoes": {
+    "pixTipo": "CPF/CNPJ",
+    "pix": "",
+    "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:"
+  },
+  "banners": [],
+  "galeria": [],
+  "cupons": [],
+  "seo": {
+    "paginas": [],
+    "og": {
+      "titulo": "",
+      "desc": "",
+      "imagem": ""
+    }
+  }
+}

@@ -1,0 +1,41 @@
+
+[
+  {
+    "id": "PRD-001",
+    "nome": "Legging Cós Alto Sculpt",
+    "sku": "FEM-LEG-001",
+    "categoria": "Feminina",
+    "subcategoria": "Leggings",
+    "tecido": "Poliamida com elastano",
+    "preco": 219.90,
+    "precoAntigo": 259.90,
+    "tamanhos": ["P", "M", "G", "GG"],
+    "cores": [
+      {
+        "nome": "Vinho",
+        "hex": "#59283B"
+      }
+    ],
+    "fotos": [
+      "img/produtos/legging-sculpt-01.jpg",
+      "img/produtos/legging-sculpt-02.jpg"
+    ],
+    "imagem": "img/produtos/legging-sculpt-01.jpg",
+    "variantes": {
+      "Vinho|P": 5,
+      "Vinho|M": 8,
+      "Vinho|G": 4,
+      "Vinho|GG": 2
+    },
+    "estoque": 19,
+    "estoqueMinimo": 3,
+    "badges": ["Mais vendido"],
+    "descricao": "Legging com compressão média, cós alto e tecido confortável.",
+    "guia": "P: ... M: ... G: ...",
+    "video": "",
+    "slug": "legging-cos-alto-sculpt",
+    "metaTitle": "Legging Sculpt MAUY",
+    "metaDesc": "Legging fitness de cós alto.",
+    "ativo": true
+  }
+]
