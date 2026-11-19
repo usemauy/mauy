@@ -1,0 +1,143 @@
+{
+ "site": {
+  "aviso": "Frete grátis acima de R$ 399,90 · 3x sem juros",
+  "whatsapp": "5547992708359",
+  "frase": "",
+  "rodape": "MAUY Fitness · Moda fitness para o dia a dia.",
+  "gratis": 399.9,
+  "marca": {
+   "logoClaro": "",
+   "logoEscuro": "",
+   "favicon": "",
+   "cor1": "#59283B",
+   "cor2": "#C5A99A",
+   "fonte": "Poppins"
+  },
+  "pix": 0
+ },
+ "banners": [
+  {
+   "titulo": "Elegância em movimento",
+   "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+   "cta": "Descobrir a coleção",
+   "imagem": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=2000&q=85",
+   "ativo": true,
+   "mobile": "img/site/banners-0-mobile-1nrs0cd1ivj.jpg"
+  },
+  {
+   "titulo": "A força está nos detalhes.",
+   "texto": "Texturas, conforto e formas que valorizam cada movimento.",
+   "cta": "Conhecer os essenciais",
+   "categoria": "Feminina",
+   "imagem": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=85"
+  },
+  {
+   "titulo": "Vista o seu melhor ritmo.",
+   "texto": "Um novo olhar para a sua rotina. Ganhe 10% na primeira compra com MAUY10.",
+   "cta": "Escolher minha peça",
+   "imagem": "https://images.unsplash.com/photo-1540496905036-5937c10647cc?auto=format&fit=crop&w=1800&q=85"
+  }
+ ],
+ "galeria": [],
+ "produtos": [
+  {
+   "id": "FEM-TOP-001",
+   "nome": "Top Essencial Fio",
+   "sku": "FEM-TOP-001",
+   "categoria": "Feminina",
+   "subcategoria": "Top",
+   "preco": 99.9,
+   "tamanhos": [
+    "PP",
+    "P",
+    "M",
+    "G",
+    "GG"
+   ],
+   "cores": [
+    {
+     "nome": "Preto",
+     "hex": "#000000"
+    },
+    {
+     "nome": "Branco",
+     "hex": "#ffffff"
+    }
+   ],
+   "fotos": [
+    "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+    "img/produtos/top-essencial-fio-1gf1he33u3z.jpg"
+   ],
+   "variantes": {
+    "Preto|PP": 1,
+    "Preto|P": 2,
+    "Preto|M": 2,
+    "Preto|G": 2,
+    "Preto|GG": 1,
+    "Branco|PP": 1,
+    "Branco|P": 1,
+    "Branco|M": 0,
+    "Branco|G": 0,
+    "Branco|GG": 0
+   },
+   "badges": [
+    "Mais vendido"
+   ],
+   "estoqueMinimo": 3,
+   "ativo": true,
+   "descricao": "O top essencial para compor looks do dia a dia, nas cores Preto e Branco e em tamanhos do PP ao GG.\n\nDetalhes do Produto:\n\nEstilo: Básico essencial\n\nCores: Preto e Branco\n\nTamanhos: PP, P, M, G e GG",
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "slug": "top-essencial-fio",
+   "metaTitle": "Top Essencial Fio | MAUY",
+   "metaDesc": "Top Essencial Fio MAUY nas cores Preto e Branco, tamanhos PP ao GG. Por R$ 99,90. Compre online.",
+   "estoque": 8,
+   "imagem": "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+   "imagens": [
+    "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+    "img/produtos/top-essencial-fio-1gf1he33u3z.jpg"
+   ]
+  },
+  {
+   "id": "PRD-MW2Y41PT",
+   "nome": "Luva MAUY",
+   "sku": "ACE-LUV-001",
+   "categoria": "Acessórios",
+   "subcategoria": "Luva",
+   "preco": 59.9,
+   "tamanhos": [
+    "U"
+   ],
+   "cores": [
+    {
+     "nome": "Rosé",
+     "hex": "#ffdbd8"
+    }
+   ],
+   "fotos": [
+    "img/produtos/luva-mauy-a10d7r3yer.jpg"
+   ],
+   "variantes": {
+    "Rosé|U": 1
+   },
+   "badges": [
+    "Últimas unidades"
+   ],
+   "estoqueMinimo": 3,
+   "ativo": true,
+   "descricao": "Luva MAUY na cor Rosé, em tamanho único. Um acessório para completar o visual.\n\nDetalhes do Produto:\n\nCor: Rosé\n\nTamanho: Único",
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "slug": "luva-mauy",
+   "metaTitle": "Luva MAUY Rosé | MAUY",
+   "metaDesc": "Luva MAUY na cor Rosé, tamanho único. Por R$ 59,90. Últimas unidades, compre online.",
+   "estoque": 1,
+   "imagem": "img/produtos/luva-mauy-a10d7r3yer.jpg",
+   "imagens": [
+    "img/produtos/luva-mauy-a10d7r3yer.jpg"
+   ]
+  }
+ ]
+}

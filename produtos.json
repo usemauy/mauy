@@ -1,0 +1,94 @@
+[
+ {
+  "id": "FEM-TOP-001",
+  "nome": "Top Essencial Fio",
+  "sku": "FEM-TOP-001",
+  "categoria": "Feminina",
+  "subcategoria": "Top",
+  "preco": 99.9,
+  "tamanhos": [
+   "PP",
+   "P",
+   "M",
+   "G",
+   "GG"
+  ],
+  "cores": [
+   {
+    "nome": "Preto",
+    "hex": "#000000"
+   },
+   {
+    "nome": "Branco",
+    "hex": "#ffffff"
+   }
+  ],
+  "fotos": [
+   "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+   "img/produtos/top-essencial-fio-1gf1he33u3z.jpg"
+  ],
+  "variantes": {
+   "Preto|PP": 1,
+   "Preto|P": 2,
+   "Preto|M": 2,
+   "Preto|G": 2,
+   "Preto|GG": 1,
+   "Branco|PP": 1,
+   "Branco|P": 1,
+   "Branco|M": 0,
+   "Branco|G": 0,
+   "Branco|GG": 0
+  },
+  "badges": [
+   "Mais vendido"
+  ],
+  "estoqueMinimo": 3,
+  "ativo": true,
+  "descricao": "O top essencial para compor looks do dia a dia, nas cores Preto e Branco e em tamanhos do PP ao GG.\n\nDetalhes do Produto:\n\nEstilo: Básico essencial\n\nCores: Preto e Branco\n\nTamanhos: PP, P, M, G e GG",
+  "tecido": "",
+  "guia": "",
+  "video": "",
+  "slug": "top-essencial-fio",
+  "metaTitle": "Top Essencial Fio | MAUY",
+  "metaDesc": "Top Essencial Fio MAUY nas cores Preto e Branco, tamanhos PP ao GG. Por R$ 99,90. Compre online.",
+  "estoque": 8,
+  "imagem": "img/produtos/top-essencial-fio-10lm17b3v6v.jpg"
+ },
+ {
+  "id": "PRD-MW2Y41PT",
+  "nome": "Luva MAUY",
+  "sku": "ACE-LUV-001",
+  "categoria": "Acessórios",
+  "subcategoria": "Luva",
+  "preco": 59.9,
+  "tamanhos": [
+   "U"
+  ],
+  "cores": [
+   {
+    "nome": "Rosé",
+    "hex": "#ffdbd8"
+   }
+  ],
+  "fotos": [
+   "img/produtos/luva-mauy-a10d7r3yer.jpg"
+  ],
+  "variantes": {
+   "Rosé|U": 1
+  },
+  "badges": [
+   "Últimas unidades"
+  ],
+  "estoqueMinimo": 3,
+  "ativo": true,
+  "descricao": "Luva MAUY na cor Rosé, em tamanho único. Um acessório para completar o visual.\n\nDetalhes do Produto:\n\nCor: Rosé\n\nTamanho: Único",
+  "tecido": "",
+  "guia": "",
+  "video": "",
+  "slug": "luva-mauy",
+  "metaTitle": "Luva MAUY Rosé | MAUY",
+  "metaDesc": "Luva MAUY na cor Rosé, tamanho único. Por R$ 59,90. Últimas unidades, compre online.",
+  "estoque": 1,
+  "imagem": "img/produtos/luva-mauy-a10d7r3yer.jpg"
+ }
+]
