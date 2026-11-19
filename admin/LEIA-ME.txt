@@ -1,0 +1,19 @@
+MAUY — estrutura inicial do projeto
+
+Arquivos na raiz:
+- index.html: loja virtual + painel administrativo integrado.
+- site.json: configurações da marca e da loja.
+- produtos.json: catálogo de produtos (inicia vazio).
+- dados.json: dados consolidados que a vitrine lê.
+
+Pastas de imagens:
+- img/site/: logo, favicon, banners e imagens institucionais.
+- img/produtos/: fotos dos produtos.
+
+Formatos recomendados:
+- Fotos de produtos e banners: JPG/JPEG ou WebP (PNG quando precisar de transparência).
+- Logos e ícones vetoriais: SVG ou PNG transparente.
+
+Não é necessário preencher os JSON manualmente se você usar o painel. Cadastre/edite pelo painel e publique pelo recurso de sincronização configurado. Ao publicar, o painel gera site.json, produtos.json e dados.json, e envia as imagens para img/site/ e img/produtos/.
+
+Observação: configure o repositório GitHub no painel antes de usar a publicação. A estrutura local não significa que o GitHub/Vercel já estejam conectados.
