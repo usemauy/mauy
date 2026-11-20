@@ -1,49 +1,262 @@
-
 {
-  "site": {
-    "aviso": "Frete grátis acima de R$ 400",
-    "whatsapp": "5547999999999",
-    "frase": "Força em cada detalhe",
-    "rodape": "MAUY Fitness",
-    "gratis": 400,
-    "pix": 5,
-    "marca": {
-      "cor1": "#59283B",
-      "cor2": "#C5A99A",
-      "fonte": "Poppins",
-      "logoClaro": "img/site/logo-claro.png",
-      "logoEscuro": "img/site/logo-escuro.png"
-    }
+ "site": {
+  "aviso": "Frete grátis acima de R$ 400,00 · 3x sem juros",
+  "avisos": [
+   {
+    "t": "Frete grátis acima de R$ 400,00 · 3x sem juros",
+    "link": "",
+    "ini": "",
+    "fim": ""
+   },
+   {
+    "t": "Nova coleção chegou",
+    "link": "#loja",
+    "ini": "",
+    "fim": ""
+   },
+   {
+    "t": "Use o cupom MAUY10 na sua primeira compra",
+    "link": "#loja",
+    "ini": "",
+    "fim": ""
+   }
+  ],
+  "avisoCor": "#59283B",
+  "avisoIntervalo": 5000,
+  "whatsapp": "5547992708359",
+  "whatsappMsg": "Olá, MAUY! Quero finalizar meu pedido:",
+  "frase": "Força em cada detalhe",
+  "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
+  "gratis": 400,
+  "marca": {
+   "cor1": "#59283B",
+   "cor2": "#C5A99A",
+   "fonte": "Poppins"
   },
-  "banners": [
-    {
-      "titulo": "Design que vai além do treino.",
-      "texto": "Moda fitness para acompanhar sua rotina.",
-      "cta": "Descobrir a coleção",
-      "link": "#loja",
-      "imagem": "img/site/banner-01.jpg"
-    }
-  ],
-  "galeria": [
-    {
-      "img": "img/site/galeria-01.jpg",
-      "legenda": "Top Essence"
-    }
-  ],
-  "produtos": [
-    {
-      "id": "p1",
-      "nome": "Top Alta Sustentação Essence",
-      "categoria": "Feminina",
-      "preco": 149.90,
-      "precoAntigo": 0,
-      "imagem": "img/produtos/top-essence.jpg",
-      "imagens": [
-        "img/produtos/top-essence.jpg"
-      ],
-      "tamanhos": ["P", "M", "G", "GG"],
-      "descricao": "Top com toque macio e ótima sustentação.",
-      "ativo": true
-    }
+  "fonte": "Poppins",
+  "favicon": "",
+  "pix": 5,
+  "parcelas": 3,
+  "galTitulo": "Escolhas para o seu ritmo",
+  "galTexto": "Explore peças e acessórios da coleção.",
+  "freteBase": 24.9,
+  "fretePostagem": 2,
+  "freteEstimativa": true,
+  "freteEstados": [],
+  "intervalo": 6000,
+  "transicao": "slide",
+  "textos": {
+   "sobre": "",
+   "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
+   "cookies": "",
+   "cookiesAtivo": false,
+   "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro."
+  },
+  "seo": {},
+  "cupons": [
+   {
+    "c": "MAUY10",
+    "p": 10,
+    "codigo": "MAUY10",
+    "tipo": "percentual",
+    "valor": 10,
+    "minimo": 0,
+    "validade": ""
+   }
   ]
+ },
+ "banners": [
+  {
+   "titulo": "Design que vai além do treino.",
+   "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+   "cta": "Descobrir a coleção",
+   "link": "#loja",
+   "imagem": "",
+   "imagemMobile": "",
+   "corCta": "",
+   "alt": "Design que vai além do treino.",
+   "inicio": "",
+   "fim": ""
+  },
+  {
+   "titulo": "Força em cada detalhe.",
+   "texto": "Tecidos de toque suave, costuras planas e caimento que acompanha o movimento.",
+   "cta": "Ver novidades",
+   "link": "#loja",
+   "imagem": "",
+   "imagemMobile": "",
+   "corCta": "",
+   "alt": "Força em cada detalhe.",
+   "inicio": "",
+   "fim": ""
+  }
+ ],
+ "layout": [
+  {
+   "id": "sec-banner",
+   "tipo": "banner",
+   "ativo": true
+  },
+  {
+   "id": "sec-prod",
+   "tipo": "produtos",
+   "ativo": true,
+   "titulo": "A coleção",
+   "quantidade": 0
+  },
+  {
+   "id": "sec-ben",
+   "tipo": "beneficios",
+   "ativo": true,
+   "conteudo": "Frete grátis acima de R$ 400,00\nTroca em até 7 dias\n3x sem juros"
+  }
+ ],
+ "produtos": [
+  {
+   "id": "p1",
+   "nome": "Top Alta Sustentação Essence",
+   "categoria": "Feminina",
+   "preco": 149.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "PP",
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Poliamida com elastano, forro duplo e toque macio. Costuras planas e alças que não marcam a pele.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  },
+  {
+   "id": "p2",
+   "nome": "Legging Cós Alto Sculpt",
+   "categoria": "Feminina",
+   "preco": 219.9,
+   "precoAntigo": 259.9,
+   "imagens": [],
+   "tamanhos": [
+    "PP",
+    "P",
+    "M",
+    "G",
+    "GG"
+   ],
+   "descricao": "Compressão média, opaca e de secagem rápida, com cós alto sem costura aparente.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  },
+  {
+   "id": "p3",
+   "nome": "Conjunto Fluid Lifestyle",
+   "categoria": "Feminina",
+   "preco": 329.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Top e legging em malha texturizada, com caimento suave para treino e rotina.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  },
+  {
+   "id": "p4",
+   "nome": "Short Biker Contour",
+   "categoria": "Feminina",
+   "preco": 129.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G"
+   ],
+   "descricao": "Cintura alta, barra antideslizante e tecido leve que respira.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  },
+  {
+   "id": "p5",
+   "nome": "Garrafa Térmica Studio",
+   "categoria": "Acessórios",
+   "preco": 89.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "Único"
+   ],
+   "descricao": "Aço inox com 600 ml, mantém a temperatura por até 12 horas.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  },
+  {
+   "id": "p6",
+   "nome": "Camiseta Dry Performance",
+   "categoria": "Masculina",
+   "preco": 119.9,
+   "precoAntigo": 0,
+   "imagens": [],
+   "tamanhos": [
+    "P",
+    "M",
+    "G",
+    "GG"
+   ],
+   "descricao": "Malha de secagem rápida com ajuste atlético e acabamento macio.",
+   "ativo": true,
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "cores": [],
+   "variantes": {},
+   "badges": [],
+   "estoqueMinimo": 3,
+   "sku": "",
+   "imagem": ""
+  }
+ ]
 }
