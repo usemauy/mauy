@@ -61,14 +61,14 @@
  },
  "banners": [
   {
-   "titulo": "Elegância em movimento",
-   "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
-   "cta": "Descobrir a coleção",
-   "imagem": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=2000&q=85",
    "ativo": true,
-   "mobile": "img/site/banners-0-mobile-1nrs0cd1ivj.jpg",
-   "desktop": "",
-   "sub": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real."
+   "desktop": "img/site/banners-0-desktop-8mc2878vr.jpg",
+   "mobile": "",
+   "titulo": "NOVA COLEÇÃO ",
+   "sub": "",
+   "link": "",
+   "cta": "Comprar agora",
+   "corCta": "#59283B"
   }
  ],
  "destaques": {
