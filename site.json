@@ -186,15 +186,6 @@
    "imagem": ""
   }
  },
- "layout": [
-  {
-   "id": "sec-ujaru0",
-   "tipo": "banner",
-   "ativo": true,
-   "titulo": "Banner principal / carrossel",
-   "imagem": "img/site/layout-0-imagem-1wawnmz19zr.jpg",
-   "imagemMobile": "img/site/layout-0-imagemmobile-xc7javtpn.jpg"
-  }
- ],
+ "layout": [],
  "galeria": []
 }
