@@ -117,6 +117,7 @@
    "categoria": "Acessórios",
    "subcategoria": "Luva",
    "preco": 59.9,
+   "precoAntigo": 0,
    "tamanhos": [
     "U"
    ],
@@ -124,13 +125,18 @@
     {
      "nome": "Rosé",
      "hex": "#ffdbd8"
+    },
+    {
+     "nome": "Preto",
+     "hex": "#000000"
     }
    ],
    "fotos": [
-    "img/produtos/luva-mauy-a10d7r3yer.jpg"
+    "img/produtos/luva-mauy-12g9bng2eo7.jpg"
    ],
    "variantes": {
-    "Rosé|U": 1
+    "Rosé|U": 1,
+    "Preto|U": 4
    },
    "badges": [
     "Últimas unidades"
@@ -144,10 +150,10 @@
    "slug": "luva-mauy",
    "metaTitle": "Luva MAUY Rosé | MAUY",
    "metaDesc": "Luva MAUY na cor Rosé, tamanho único. Por R$ 59,90. Últimas unidades, compre online.",
-   "estoque": 1,
-   "imagem": "img/produtos/luva-mauy-a10d7r3yer.jpg",
+   "estoque": 5,
+   "imagem": "img/produtos/luva-mauy-12g9bng2eo7.jpg",
    "imagens": [
-    "img/produtos/luva-mauy-a10d7r3yer.jpg"
+    "img/produtos/luva-mauy-12g9bng2eo7.jpg"
    ]
   },
   {
