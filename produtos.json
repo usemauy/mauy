@@ -90,5 +90,38 @@
   "metaDesc": "Luva MAUY na cor Rosé, tamanho único. Por R$ 59,90. Últimas unidades, compre online.",
   "estoque": 1,
   "imagem": "img/produtos/luva-mauy-a10d7r3yer.jpg"
+ },
+ {
+  "id": "PRD-MWP5H40C",
+  "nome": "Garrafa ",
+  "sku": "ACE-GAR-001",
+  "categoria": "Acessórios",
+  "subcategoria": "Garrafa ",
+  "preco": 89.42,
+  "precoAntigo": 0,
+  "tamanhos": [
+   "U"
+  ],
+  "cores": [],
+  "fotos": [
+   "img/produtos/garrafa-14zk6rwojj.jpg"
+  ],
+  "variantes": {
+   "Único|U": 0
+  },
+  "badges": [
+   "Lançamento"
+  ],
+  "estoqueMinimo": 3,
+  "ativo": true,
+  "descricao": "<br>",
+  "tecido": "",
+  "guia": "",
+  "video": "",
+  "slug": "garrafa",
+  "metaTitle": "",
+  "metaDesc": "",
+  "estoque": 0,
+  "imagem": "img/produtos/garrafa-14zk6rwojj.jpg"
  }
 ]
