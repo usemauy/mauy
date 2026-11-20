@@ -1,22 +1,10 @@
 {
  "site": {
-  "aviso": "Frete grátis acima de R$ 400,00 · 3x sem juros",
+  "aviso": "Frete grátis acima de R$ 399,90 · 3x sem juros",
   "avisos": [
    {
-    "t": "Frete grátis acima de R$ 400,00 · 3x sem juros",
+    "t": "Frete grátis acima de R$ 399,90 · 3x sem juros",
     "link": "",
-    "ini": "",
-    "fim": ""
-   },
-   {
-    "t": "Nova coleção chegou",
-    "link": "#loja",
-    "ini": "",
-    "fim": ""
-   },
-   {
-    "t": "Use o cupom MAUY10 na sua primeira compra",
-    "link": "#loja",
     "ini": "",
     "fim": ""
    }
@@ -24,35 +12,73 @@
   "avisoCor": "#59283B",
   "avisoIntervalo": 5000,
   "whatsapp": "5547992708359",
-  "whatsappMsg": "Olá, MAUY! Quero finalizar meu pedido:",
-  "frase": "Força em cada detalhe",
-  "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
-  "gratis": 400,
+  "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:",
+  "frase": "",
+  "rodape": "MAUY Fitness · Moda fitness para o dia a dia.",
+  "gratis": 399.9,
   "marca": {
+   "logoClaro": "img/site/marca-logoclaro-ocxrfeeua.svg",
+   "logoEscuro": "img/site/marca-logoescuro-1n5jmqpeua.svg",
+   "favicon": "img/site/marca-favicon-2gics48m.svg",
    "cor1": "#59283B",
    "cor2": "#C5A99A",
    "fonte": "Poppins"
   },
   "fonte": "Poppins",
-  "favicon": "",
+  "favicon": "img/site/marca-favicon-2gics48m.svg",
   "pix": 5,
-  "parcelas": 3,
-  "galTitulo": "Escolhas para o seu ritmo",
-  "galTexto": "Explore peças e acessórios da coleção.",
   "freteBase": 24.9,
-  "fretePostagem": 2,
-  "freteEstimativa": true,
-  "freteEstados": [],
+  "fretePostagem": 5,
+  "freteEstimativa": false,
+  "freteEstados": [
+   {
+    "uf": "SC",
+    "valor": 299.9,
+    "prazo": 2
+   }
+  ],
   "intervalo": 6000,
   "transicao": "slide",
   "textos": {
-   "sobre": "",
+   "sobre": "A MAUY é uma marca de activewear de linhas essenciais, pensada para acompanhar você do treino à vida real.",
    "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
-   "cookies": "",
-   "cookiesAtivo": false,
-   "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro."
+   "cookies": "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade (LGPD).",
+   "cookiesAtivo": true,
+   "rodape": "MAUY Fitness · Moda fitness para o dia a dia."
   },
-  "seo": {},
+  "seo": {
+   "paginas": [
+    {
+     "pagina": "Home",
+     "slug": "/",
+     "title": "MAUY | Moda fitness para o dia a dia",
+     "desc": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real. Conheça a coleção MAUY e compre online."
+    },
+    {
+     "pagina": "Moda feminina",
+     "slug": "/feminina",
+     "title": "Moda fitness feminina | MAUY",
+     "desc": "Texturas, conforto e formas que valorizam cada movimento. Descubra a coleção feminina da MAUY."
+    },
+    {
+     "pagina": "Acessórios",
+     "slug": "/acessorios",
+     "title": "Acessórios fitness | MAUY",
+     "desc": "Acessórios para completar o seu look de treino e do dia a dia. Confira a seleção da MAUY."
+    },
+    {
+     "pagina": "Moda masculina",
+     "slug": "/masculina",
+     "title": "Moda fitness masculina | MAUY",
+     "desc": "Moda fitness masculina para o treino e o dia a dia. Conheça as novidades da MAUY."
+    }
+   ],
+   "og": {
+    "titulo": "MAUY | Elegância em movimento",
+    "desc": "Activewear de linhas essenciais, do treino à vida real.",
+    "imagem": ""
+   }
+  },
   "cupons": [
    {
     "c": "MAUY10",
@@ -60,90 +86,68 @@
     "codigo": "MAUY10",
     "tipo": "percentual",
     "valor": 10,
-    "minimo": 0,
+    "minimo": 50,
+    "validade": ""
+   },
+   {
+    "c": "FRETE20",
+    "p": 0,
+    "codigo": "FRETE20",
+    "tipo": "fixo",
+    "valor": 20,
+    "minimo": 150,
     "validade": ""
    }
   ]
  },
  "banners": [
   {
-   "titulo": "Design que vai além do treino.",
-   "texto": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
-   "cta": "Descobrir a coleção",
+   "titulo": "NOVA COLEÇÃO ",
+   "texto": "",
+   "cta": "Comprar agora",
    "link": "#loja",
-   "imagem": "",
-   "imagemMobile": "",
-   "corCta": "",
-   "alt": "Design que vai além do treino.",
-   "inicio": "",
-   "fim": ""
-  },
-  {
-   "titulo": "Força em cada detalhe.",
-   "texto": "Tecidos de toque suave, costuras planas e caimento que acompanha o movimento.",
-   "cta": "Ver novidades",
-   "link": "#loja",
-   "imagem": "",
-   "imagemMobile": "",
-   "corCta": "",
-   "alt": "Força em cada detalhe.",
+   "imagem": "img/site/banners-0-desktop-ssinowit3.jpg",
+   "imagemMobile": "img/site/banners-0-mobile-p9t5ey1e3v.jpg",
+   "corCta": "#59283B",
+   "alt": "NOVA COLEÇÃO ",
    "inicio": "",
    "fim": ""
   }
  ],
  "layout": [
   {
-   "id": "sec-banner",
-   "tipo": "banner",
-   "ativo": true
-  },
-  {
-   "id": "sec-prod",
+   "id": "sec-xditkp",
    "tipo": "produtos",
    "ativo": true,
-   "titulo": "A coleção",
-   "quantidade": 0
+   "titulo": "Carrossel de produtos em destaque",
+   "quantidade": 8
   },
   {
-   "id": "sec-ben",
-   "tipo": "beneficios",
+   "id": "sec-2mvnhh",
+   "tipo": "galeria",
    "ativo": true,
-   "conteudo": "Frete grátis acima de R$ 400,00\nTroca em até 7 dias\n3x sem juros"
+   "titulo": "Acessórios ",
+   "fotos": [
+    {
+     "img": "img/site/layout-1-fotos-0-img-5hmkdt35w7.jpg",
+     "legenda": "Copo garrafa"
+    },
+    {
+     "img": "img/site/layout-1-fotos-1-img-13gdz6x311v.jpg",
+     "legenda": "Luvas"
+    }
+   ]
   }
  ],
  "produtos": [
   {
-   "id": "p1",
-   "nome": "Top Alta Sustentação Essence",
+   "id": "FEM-TOP-001",
+   "nome": "Top Essencial Fio",
+   "sku": "FEM-TOP-001",
    "categoria": "Feminina",
-   "preco": 149.9,
+   "subcategoria": "Top",
+   "preco": 99.9,
    "precoAntigo": 0,
-   "imagens": [],
-   "tamanhos": [
-    "PP",
-    "P",
-    "M",
-    "G"
-   ],
-   "descricao": "Poliamida com elastano, forro duplo e toque macio. Costuras planas e alças que não marcam a pele.",
-   "ativo": true,
-   "tecido": "",
-   "guia": "",
-   "video": "",
-   "cores": [],
-   "variantes": {},
-   "badges": [],
-   "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
-  },
-  {
-   "id": "p2",
-   "nome": "Legging Cós Alto Sculpt",
-   "categoria": "Feminina",
-   "preco": 219.9,
-   "precoAntigo": 259.9,
-   "imagens": [],
    "tamanhos": [
     "PP",
     "P",
@@ -151,112 +155,209 @@
     "G",
     "GG"
    ],
-   "descricao": "Compressão média, opaca e de secagem rápida, com cós alto sem costura aparente.",
-   "ativo": true,
-   "tecido": "",
-   "guia": "",
-   "video": "",
-   "cores": [],
-   "variantes": {},
-   "badges": [],
-   "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
-  },
-  {
-   "id": "p3",
-   "nome": "Conjunto Fluid Lifestyle",
-   "categoria": "Feminina",
-   "preco": 329.9,
-   "precoAntigo": 0,
-   "imagens": [],
-   "tamanhos": [
-    "P",
-    "M",
-    "G"
+   "cores": [
+    {
+     "nome": "Preto",
+     "hex": "#000000"
+    },
+    {
+     "nome": "Branco",
+     "hex": "#ffffff"
+    }
    ],
-   "descricao": "Top e legging em malha texturizada, com caimento suave para treino e rotina.",
-   "ativo": true,
-   "tecido": "",
-   "guia": "",
-   "video": "",
-   "cores": [],
-   "variantes": {},
-   "badges": [],
-   "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
-  },
-  {
-   "id": "p4",
-   "nome": "Short Biker Contour",
-   "categoria": "Feminina",
-   "preco": 129.9,
-   "precoAntigo": 0,
-   "imagens": [],
-   "tamanhos": [
-    "P",
-    "M",
-    "G"
+   "fotos": [
+    "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+    "img/produtos/top-essencial-fio-1gf1he33u3z.jpg"
    ],
-   "descricao": "Cintura alta, barra antideslizante e tecido leve que respira.",
+   "variantes": {
+    "Preto|PP": 1,
+    "Preto|P": 2,
+    "Preto|M": 2,
+    "Preto|G": 2,
+    "Preto|GG": 1,
+    "Branco|PP": 1,
+    "Branco|P": 1,
+    "Branco|M": 0,
+    "Branco|G": 0,
+    "Branco|GG": 0
+   },
+   "badges": [
+    "Mais vendido"
+   ],
+   "estoqueMinimo": 3,
    "ativo": true,
+   "descricao": "O top essencial para compor looks do dia a dia, nas cores Preto e Branco e em tamanhos do PP ao GG.\n\nDetalhes do Produto:\n\nEstilo: Básico essencial\n\nCores: Preto e Branco",
    "tecido": "",
    "guia": "",
    "video": "",
-   "cores": [],
-   "variantes": {},
-   "badges": [],
-   "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
+   "slug": "top-essencial-fio",
+   "metaTitle": "Top Essencial Fio | MAUY",
+   "metaDesc": "Top Essencial Fio MAUY nas cores Preto e Branco, tamanhos PP ao GG. Por R$ 99,90. Compre online.",
+   "estoque": 10,
+   "imagem": "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+   "imagens": [
+    "img/produtos/top-essencial-fio-10lm17b3v6v.jpg",
+    "img/produtos/top-essencial-fio-1gf1he33u3z.jpg"
+   ]
   },
   {
-   "id": "p5",
-   "nome": "Garrafa Térmica Studio",
+   "id": "PRD-MW2Y41PT",
+   "nome": "Luva MAUY",
+   "sku": "ACE-LUV-001",
    "categoria": "Acessórios",
+   "subcategoria": "Luva",
+   "preco": 59.9,
+   "precoAntigo": 0,
+   "tamanhos": [
+    "U"
+   ],
+   "cores": [
+    {
+     "nome": "Rosé",
+     "hex": "#ffdbd8"
+    },
+    {
+     "nome": "Preto",
+     "hex": "#000000"
+    }
+   ],
+   "fotos": [
+    "img/produtos/luva-mauy-12g9bng2eo7.jpg"
+   ],
+   "variantes": {
+    "Rosé|U": 1,
+    "Preto|U": 4
+   },
+   "badges": [
+    "Últimas unidades"
+   ],
+   "estoqueMinimo": 3,
+   "ativo": true,
+   "descricao": "Luva MAUY na cor Rosé, em tamanho único. Um acessório para completar o visual.\n\nDetalhes do Produto:\n\nCor: Rosé\n\nTamanho: Único",
+   "tecido": "",
+   "guia": "",
+   "video": "",
+   "slug": "luva-mauy",
+   "metaTitle": "Luva MAUY Rosé | MAUY",
+   "metaDesc": "Luva MAUY na cor Rosé, tamanho único. Por R$ 59,90. Últimas unidades, compre online.",
+   "estoque": 5,
+   "imagem": "img/produtos/luva-mauy-12g9bng2eo7.jpg",
+   "imagens": [
+    "img/produtos/luva-mauy-12g9bng2eo7.jpg"
+   ]
+  },
+  {
+   "id": "PRD-MWP5H40C",
+   "nome": "Garrafa ",
+   "sku": "ACE-GAR-001",
+   "categoria": "Acessórios",
+   "subcategoria": "Garrafa ",
    "preco": 89.9,
    "precoAntigo": 0,
-   "imagens": [],
    "tamanhos": [
-    "Único"
+    "U"
    ],
-   "descricao": "Aço inox com 600 ml, mantém a temperatura por até 12 horas.",
+   "cores": [],
+   "fotos": [
+    "img/produtos/garrafa-ybbgcy2i8j.jpg"
+   ],
+   "variantes": {
+    "Único|U": 3
+   },
+   "badges": [
+    "Lançamento"
+   ],
+   "estoqueMinimo": 3,
    "ativo": true,
+   "descricao": "<br>",
    "tecido": "",
    "guia": "",
    "video": "",
-   "cores": [],
-   "variantes": {},
-   "badges": [],
-   "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
+   "slug": "garrafa",
+   "metaTitle": "",
+   "metaDesc": "",
+   "estoque": 3,
+   "imagem": "img/produtos/garrafa-ybbgcy2i8j.jpg",
+   "imagens": [
+    "img/produtos/garrafa-ybbgcy2i8j.jpg"
+   ]
   },
   {
-   "id": "p6",
-   "nome": "Camiseta Dry Performance",
+   "id": "PRD-MWPFM749",
+   "nome": "Camiseta Dry Fit",
+   "sku": "MAS-CAM-001",
    "categoria": "Masculina",
-   "preco": 119.9,
+   "subcategoria": "Camiseta",
+   "preco": 79.9,
    "precoAntigo": 0,
-   "imagens": [],
    "tamanhos": [
     "P",
     "M",
     "G",
-    "GG"
+    "GG",
+    "G1",
+    "G2",
+    "G3",
+    "G4"
    ],
-   "descricao": "Malha de secagem rápida com ajuste atlético e acabamento macio.",
-   "ativo": true,
-   "tecido": "",
-   "guia": "",
-   "video": "",
-   "cores": [],
-   "variantes": {},
+   "cores": [
+    {
+     "nome": "Branco",
+     "hex": "#ffffff"
+    },
+    {
+     "nome": "Preto",
+     "hex": "#000000"
+    },
+    {
+     "nome": "Azul Marinho",
+     "hex": "#15002e"
+    }
+   ],
+   "fotos": [
+    "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg"
+   ],
+   "variantes": {
+    "Branco|P": 2,
+    "Branco|M": 3,
+    "Branco|G": 3,
+    "Branco|GG": 3,
+    "Branco|G1": 3,
+    "Branco|G2": 2,
+    "Branco|G3": 2,
+    "Branco|G4": 2,
+    "Preto|P": 2,
+    "Preto|M": 3,
+    "Preto|G": 4,
+    "Preto|GG": 3,
+    "Preto|G1": 3,
+    "Preto|G2": 2,
+    "Preto|G3": 2,
+    "Preto|G4": 2,
+    "Azul Marinho|P": 2,
+    "Azul Marinho|M": 3,
+    "Azul Marinho|G": 2,
+    "Azul Marinho|GG": 2,
+    "Azul Marinho|G1": 2,
+    "Azul Marinho|G2": 2,
+    "Azul Marinho|G3": 1,
+    "Azul Marinho|G4": 1
+   },
    "badges": [],
    "estoqueMinimo": 3,
-   "sku": "",
-   "imagem": ""
+   "ativo": true,
+   "descricao": "<h3>Leveza, Respirabilidade e Liberdade de Movimento</h3><p>Desenvolvida para acompanhar treinos intensos, corridas ou o dia a dia com máximo conforto, a <b>Camiseta Dry Fit</b> combina tecido leve de rápida absorção e secagem com um caimento versátil e moderno. A <b>gola redonda</b> garante ajuste confortável ao pescoço sem apertar, enquanto a <b>manga curta</b> oferece amplitude total de movimento para os ombros e braços.</p><p>Com peso de pacote de <b>0,15 kg (150 g)</b>, é uma peça ultraleve, fácil de dobrar e levar na mochila ou mala de treino, ideal tanto para uso esportivo quanto para composições casuais e minimalistas.</p>",
+   "tecido": "94% poliamida",
+   "guia": "",
+   "video": "",
+   "slug": "camiseta-dry-fit",
+   "metaTitle": "",
+   "metaDesc": "",
+   "estoque": 56,
+   "imagem": "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg",
+   "imagens": [
+    "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg"
+   ]
   }
  ]
 }

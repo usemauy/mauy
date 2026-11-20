@@ -108,7 +108,8 @@
     "valor": 44.9,
     "prazo": "7 a 12 dias úteis"
    }
-  ]
+  ],
+  "base": 24.9
  },
  "marca": {
   "logoClaro": "img/site/marca-logoclaro-ocxrfeeua.svg",
@@ -121,7 +122,17 @@
  "avisos": {
   "ativo": true,
   "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
-  "cor": "#59283B"
+  "cor": "#59283B",
+  "itens": [
+   {
+    "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
+    "link": "",
+    "ativo": true,
+    "inicio": "",
+    "fim": ""
+   }
+  ],
+  "intervalo": 5
  },
  "textos": {
   "rodape": "MAUY Fitness · Moda fitness para o dia a dia.",
@@ -200,5 +211,10 @@
    ]
   }
  ],
- "galeria": []
+ "galeria": [],
+ "carrossel": {
+  "intervalo": 6,
+  "transicao": "slide"
+ },
+ "pix": 5
 }
