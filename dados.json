@@ -185,6 +185,83 @@
    "imagens": [
     "img/produtos/garrafa-14zk6rwojj.jpg"
    ]
+  },
+  {
+   "id": "PRD-MWPFM749",
+   "nome": "Camiseta Dry Fit",
+   "sku": "MAS-CAM-001",
+   "categoria": "Masculina",
+   "subcategoria": "Camiseta",
+   "preco": 79.9,
+   "precoAntigo": 0,
+   "tamanhos": [
+    "P",
+    "M",
+    "G",
+    "GG",
+    "G1",
+    "G2",
+    "G3",
+    "G4"
+   ],
+   "cores": [
+    {
+     "nome": "Branco",
+     "hex": "#ffffff"
+    },
+    {
+     "nome": "Preto",
+     "hex": "#000000"
+    },
+    {
+     "nome": "Azul Marinho",
+     "hex": "#15002e"
+    }
+   ],
+   "fotos": [
+    "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg"
+   ],
+   "variantes": {
+    "Branco|P": 2,
+    "Branco|M": 3,
+    "Branco|G": 3,
+    "Branco|GG": 3,
+    "Branco|G1": 3,
+    "Branco|G2": 2,
+    "Branco|G3": 2,
+    "Branco|G4": 2,
+    "Preto|P": 2,
+    "Preto|M": 3,
+    "Preto|G": 4,
+    "Preto|GG": 3,
+    "Preto|G1": 3,
+    "Preto|G2": 2,
+    "Preto|G3": 2,
+    "Preto|G4": 2,
+    "Azul Marinho|P": 2,
+    "Azul Marinho|M": 3,
+    "Azul Marinho|G": 2,
+    "Azul Marinho|GG": 2,
+    "Azul Marinho|G1": 2,
+    "Azul Marinho|G2": 2,
+    "Azul Marinho|G3": 1,
+    "Azul Marinho|G4": 1
+   },
+   "badges": [],
+   "estoqueMinimo": 3,
+   "ativo": true,
+   "descricao": "<h3 dir=\"ltr\" data-path-to-node=\"1\">Leveza, Respirabilidade e Liberdade de Movimento</h3><p dir=\"ltr\" data-path-to-node=\"2\">Desenvolvida para acompanhar treinos intensos, corridas ou o dia a dia com máximo conforto, a <b data-path-to-node=\"2\" data-index-in-node=\"94\">Camiseta Dry Fit</b> combina tecido leve de rápida absorção e secagem com um caimento versátil e moderno. A <b data-path-to-node=\"2\" data-index-in-node=\"198\">gola redonda</b> garante ajuste confortável ao pescoço sem apertar, enquanto a <b data-path-to-node=\"2\" data-index-in-node=\"273\">manga curta</b> oferece amplitude total de movimento para os ombros e braços.</p><p dir=\"ltr\" data-path-to-node=\"3\">Com peso de pacote de <b data-path-to-node=\"3\" data-index-in-node=\"22\">0,15 kg (150 g)</b>, é uma peça ultraleve, fácil de dobrar e levar na mochila ou mala de treino, ideal tanto para uso esportivo quanto para composições casuais e minimalistas.</p>",
+   "tecido": "94% poliamida",
+   "guia": "",
+   "video": "",
+   "slug": "camiseta-dry-fit",
+   "metaTitle": "",
+   "metaDesc": "",
+   "estoque": 56,
+   "imagem": "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg",
+   "imagens": [
+    "img/produtos/camiseta-dry-fit-n8p9wa1lfn.jpg"
+   ]
   }
  ]
 }
