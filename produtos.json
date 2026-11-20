@@ -6,6 +6,7 @@
   "categoria": "Feminina",
   "subcategoria": "Top",
   "preco": 99.9,
+  "precoAntigo": 0,
   "tamanhos": [
    "PP",
    "P",
@@ -44,14 +45,14 @@
   ],
   "estoqueMinimo": 3,
   "ativo": true,
-  "descricao": "O top essencial para compor looks do dia a dia, nas cores Preto e Branco e em tamanhos do PP ao GG.\n\nDetalhes do Produto:\n\nEstilo: Básico essencial\n\nCores: Preto e Branco\n\nTamanhos: PP, P, M, G e GG",
+  "descricao": "O top essencial para compor looks do dia a dia, nas cores Preto e Branco e em tamanhos do PP ao GG.\n\nDetalhes do Produto:\n\nEstilo: Básico essencial\n\nCores: Preto e Branco",
   "tecido": "",
   "guia": "",
   "video": "",
   "slug": "top-essencial-fio",
   "metaTitle": "Top Essencial Fio | MAUY",
   "metaDesc": "Top Essencial Fio MAUY nas cores Preto e Branco, tamanhos PP ao GG. Por R$ 99,90. Compre online.",
-  "estoque": 8,
+  "estoque": 10,
   "imagem": "img/produtos/top-essencial-fio-10lm17b3v6v.jpg"
  },
  {
