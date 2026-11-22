@@ -1,20 +1,19 @@
 {
  "site": {
-  "aviso": "Frete grátis acima de R$ 399,90 · 3x sem juros",
+  "aviso": "Frete grátis acima de R$ 399,9  ·  3x sem juros",
   "avisos": [
-   {
-    "t": "Frete grátis acima de R$ 399,90 · 3x sem juros",
-    "link": "",
-    "ini": "",
-    "fim": ""
-   }
+   "Frete grátis acima de R$ 399,9  ·  3x sem juros",
+   "Nova coleção disponível  ·  Confira",
+   "Primeira compra? Use o cupom  MAUY10"
   ],
   "avisoCor": "#59283B",
   "avisoIntervalo": 5000,
+  "nome": "MAUY",
   "whatsapp": "5547992708359",
-  "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:",
   "frase": "",
   "rodape": "MAUY Fitness · Moda fitness para o dia a dia.",
+  "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
+  "cookies": "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade (LGPD).",
   "gratis": 399.9,
   "marca": {
    "logoClaro": "img/site/marca-logoclaro-ocxrfeeua.svg",
@@ -24,12 +23,11 @@
    "cor2": "#C5A99A",
    "fonte": "Poppins"
   },
-  "fonte": "Poppins",
-  "favicon": "img/site/marca-favicon-2gics48m.svg",
   "pix": 5,
+  "parcelas": 3,
+  "intervalo": 6000,
   "freteBase": 24.9,
-  "fretePostagem": 5,
-  "freteEstimativa": false,
+  "postagem": 5,
   "freteEstados": [
    {
     "uf": "SC",
@@ -37,66 +35,28 @@
     "prazo": 2
    }
   ],
-  "intervalo": 6000,
-  "transicao": "slide",
-  "textos": {
-   "sobre": "A MAUY é uma marca de activewear de linhas essenciais, pensada para acompanhar você do treino à vida real.",
-   "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
-   "cookies": "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade (LGPD).",
-   "cookiesAtivo": true,
-   "rodape": "MAUY Fitness · Moda fitness para o dia a dia."
-  },
+  "medidas": "P | 82-86 | 62-66 | 88-92\nM | 87-91 | 67-71 | 93-97\nG | 92-96 | 72-76 | 98-102\nGG | 97-101 | 77-81 | 103-107",
   "seo": {
-   "paginas": [
-    {
-     "pagina": "Home",
-     "slug": "/",
-     "title": "MAUY | Moda fitness para o dia a dia",
-     "desc": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real. Conheça a coleção MAUY e compre online."
-    },
-    {
-     "pagina": "Moda feminina",
-     "slug": "/feminina",
-     "title": "Moda fitness feminina | MAUY",
-     "desc": "Texturas, conforto e formas que valorizam cada movimento. Descubra a coleção feminina da MAUY."
-    },
-    {
-     "pagina": "Acessórios",
-     "slug": "/acessorios",
-     "title": "Acessórios fitness | MAUY",
-     "desc": "Acessórios para completar o seu look de treino e do dia a dia. Confira a seleção da MAUY."
-    },
-    {
-     "pagina": "Moda masculina",
-     "slug": "/masculina",
-     "title": "Moda fitness masculina | MAUY",
-     "desc": "Moda fitness masculina para o treino e o dia a dia. Conheça as novidades da MAUY."
-    }
-   ],
-   "og": {
-    "titulo": "MAUY | Elegância em movimento",
-    "desc": "Activewear de linhas essenciais, do treino à vida real.",
-    "imagem": ""
-   }
+   "titulo": "MAUY | Moda fitness para o dia a dia",
+   "desc": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real. Conheça a coleção MAUY e compre online.",
+   "imagem": ""
   },
   "cupons": [
    {
     "c": "MAUY10",
-    "p": 10,
-    "codigo": "MAUY10",
     "tipo": "percentual",
-    "valor": 10,
-    "minimo": 50,
-    "validade": ""
+    "v": 10,
+    "p": 10,
+    "min": 50,
+    "val": ""
    },
    {
     "c": "FRETE20",
-    "p": 0,
-    "codigo": "FRETE20",
     "tipo": "fixo",
-    "valor": 20,
-    "minimo": 150,
-    "validade": ""
+    "v": 20,
+    "p": 0,
+    "min": 150,
+    "val": ""
    }
   ]
  },
@@ -107,11 +67,7 @@
    "cta": "Comprar agora",
    "link": "#loja",
    "imagem": "img/site/banners-0-desktop-ssinowit3.jpg",
-   "imagemMobile": "img/site/banners-0-mobile-p9t5ey1e3v.jpg",
-   "corCta": "#59283B",
-   "alt": "NOVA COLEÇÃO ",
-   "inicio": "",
-   "fim": ""
+   "imagemMobile": "img/site/banners-0-mobile-p9t5ey1e3v.jpg"
   }
  ],
  "layout": [

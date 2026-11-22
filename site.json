@@ -85,6 +85,7 @@
  "frete": {
   "gratisAcima": 399.9,
   "postagem": 5,
+  "base": 24.9,
   "ativo": true,
   "retirada": {
    "ativo": true,
@@ -108,8 +109,7 @@
     "valor": 44.9,
     "prazo": "7 a 12 dias úteis"
    }
-  ],
-  "base": 24.9
+  ]
  },
  "marca": {
   "logoClaro": "img/site/marca-logoclaro-ocxrfeeua.svg",
@@ -123,6 +123,8 @@
   "ativo": true,
   "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
   "cor": "#59283B",
+  "segundos": 5,
+  "mensagens": "Frete grátis acima de R$ 399,9  ·  3x sem juros\nNova coleção disponível  ·  Confira\nPrimeira compra? Use o cupom  MAUY10",
   "itens": [
    {
     "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
@@ -216,5 +218,8 @@
   "intervalo": 6,
   "transicao": "slide"
  },
- "pix": 5
+ "pix": 5,
+ "parcelas": 3,
+ "bannerSegundos": 6,
+ "tabelaMedidas": "P | 82-86 | 62-66 | 88-92\nM | 87-91 | 67-71 | 93-97\nG | 92-96 | 72-76 | 98-102\nGG | 97-101 | 77-81 | 103-107"
 }
