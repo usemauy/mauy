@@ -1,8 +1,8 @@
 {
  "site": {
-  "aviso": "Frete grátis acima de R$ 399,9  ·  3x sem juros",
+  "aviso": "Frete grátis acima de R$ 299,9  ·  3x sem juros",
   "avisos": [
-   "Frete grátis acima de R$ 399,9  ·  3x sem juros",
+   "Frete grátis acima de R$ 299,9  ·  3x sem juros",
    "Nova coleção disponível  ·  Confira",
    "Primeira compra? Use o cupom  MAUY10"
   ],
@@ -25,7 +25,7 @@
   },
   "pix": 5,
   "parcelas": 3,
-  "intervalo": 6000,
+  "intervalo": 2000,
   "freteBase": 24.9,
   "postagem": 5,
   "freteEstados": [
