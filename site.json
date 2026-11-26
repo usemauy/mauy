@@ -1,16 +1,6 @@
 {
  "nome": "MAUY",
  "whatsapp": "5547992708359",
- "frase": "Força em cada detalhe",
- "pix": 5,
- "parcelas": 3,
- "bannerSegundos": 6,
- "frete": {
-  "gratisAcima": 400,
-  "postagem": 2,
-  "base": 24.9
- },
- "freteEstados": [],
  "cupons": [
   {
    "codigo": "MAUY10",
@@ -22,6 +12,16 @@
    "ativo": true
   }
  ],
+ "frase": "Força em cada detalhe",
+ "pix": 5,
+ "parcelas": 3,
+ "bannerSegundos": 6,
+ "frete": {
+  "gratisAcima": 400,
+  "postagem": 2,
+  "base": 24.9
+ },
+ "freteEstados": [],
  "tema": {
   "wine": "#59283B",
   "nude": "#C5A99A"
@@ -44,6 +44,7 @@
  "textos": {
   "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
   "sobre": "",
+  "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
   "cookiesAtivo": true,
   "cookies": "Usamos cookies para melhorar sua experiência e medir o uso da loja."
  },
@@ -94,5 +95,44 @@
    "titulo": "A coleção",
    "quantidade": 0
   }
- ]
+ ],
+ "tabelaMedidas": "P | 82-86 | 62-66 | 88-92\nM | 87-91 | 67-71 | 93-97\nG | 92-96 | 72-76 | 98-102\nGG | 97-101 | 77-81 | 103-107",
+ "integracoes": {
+  "pixTipo": "CPF/CNPJ",
+  "pix": "",
+  "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:"
+ },
+ "seo": {
+  "paginas": [
+   {
+    "pagina": "Home",
+    "slug": "/",
+    "title": "",
+    "desc": ""
+   },
+   {
+    "pagina": "Moda feminina",
+    "slug": "/feminina",
+    "title": "",
+    "desc": ""
+   },
+   {
+    "pagina": "Acessórios",
+    "slug": "/acessorios",
+    "title": "",
+    "desc": ""
+   },
+   {
+    "pagina": "Moda masculina",
+    "slug": "/masculina",
+    "title": "",
+    "desc": ""
+   }
+  ],
+  "og": {
+   "titulo": "",
+   "desc": "",
+   "imagem": ""
+  }
+ }
 }
