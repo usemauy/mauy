@@ -1,8 +1,8 @@
 [
  {
   "id": "PRD-SEED1",
-  "sku": "FEM-TOP-001",
   "nome": "Top Alta Sustentação Essence",
+  "sku": "FEM-TOP-001",
   "categoria": "Feminina",
   "subcategoria": "Top",
   "preco": 149.9,
@@ -14,21 +14,29 @@
    "G"
   ],
   "cores": [],
-  "fotos": [],
-  "imagem": "",
-  "variantes": {},
+  "fotos": [
+   "img/produtos/top-alta-sustentacao-essence-faztkx28l7.jpg",
+   "img/produtos/top-alta-sustentacao-essence-5sb8xu29zn.jpg"
+  ],
+  "variantes": {
+   "Único|PP": 0,
+   "Único|P": 0,
+   "Único|M": 0,
+   "Único|G": 0
+  },
   "badges": [],
-  "estoque": 0,
   "estoqueMinimo": 3,
-  "controlarEstoque": false,
   "ativo": true,
   "descricao": "Poliamida com elastano, forro duplo e toque macio. Costuras planas e alças que não marcam a pele.",
   "tecido": "",
   "guia": "",
   "video": "",
-  "slug": "",
+  "slug": "top-alta-sustentacao-essence",
   "metaTitle": "",
-  "metaDesc": ""
+  "metaDesc": "",
+  "imagem": "img/produtos/top-alta-sustentacao-essence-faztkx28l7.jpg",
+  "estoque": 0,
+  "controlarEstoque": false
  },
  {
   "id": "PRD-SEED2",
@@ -124,8 +132,8 @@
  },
  {
   "id": "PRD-SEED5",
-  "sku": "ACE-GAR-001",
   "nome": "Garrafa Térmica Studio",
+  "sku": "ACE-GAR-001",
   "categoria": "Acessórios",
   "subcategoria": "Garrafa",
   "preco": 89.9,
@@ -134,21 +142,27 @@
    "Único"
   ],
   "cores": [],
-  "fotos": [],
-  "imagem": "",
-  "variantes": {},
+  "fotos": [
+   "img/produtos/garrafa-termica-studio-1xr0s7323pb.jpg",
+   "img/produtos/garrafa-termica-studio-y8dgjc8u7.jpg",
+   "img/produtos/garrafa-termica-studio-ybbgcy2i8j.jpg"
+  ],
+  "variantes": {
+   "Único|Único": 0
+  },
   "badges": [],
-  "estoque": 0,
   "estoqueMinimo": 3,
-  "controlarEstoque": false,
   "ativo": true,
   "descricao": "Aço inox com 600 ml, mantém a temperatura por até 12 horas.",
   "tecido": "",
   "guia": "",
   "video": "",
-  "slug": "",
+  "slug": "garrafa-termica-studio",
   "metaTitle": "",
-  "metaDesc": ""
+  "metaDesc": "",
+  "imagem": "img/produtos/garrafa-termica-studio-1xr0s7323pb.jpg",
+  "estoque": 0,
+  "controlarEstoque": false
  },
  {
   "id": "PRD-SEED6",
