@@ -1,50 +1,98 @@
-
 {
-  "nome": "MAUY",
-  "whatsapp": "5547999999999",
-  "frete": {
-    "gratisAcima": 400,
-    "postagem": 2
-  },
-  "tema": {
-    "wine": "#59283B",
-    "nude": "#C5A99A"
-  },
-  "marca": {
-    "logoClaro": "img/site/logo-claro.png",
-    "logoEscuro": "img/site/logo-escuro.png",
-    "favicon": "img/site/favicon.png",
-    "cor1": "#59283B",
-    "cor2": "#C5A99A",
-    "fonte": "Poppins"
-  },
-  "avisos": {
-    "ativo": true,
-    "texto": "Frete grátis acima de R$ 400",
-    "cor": "#59283B"
-  },
-  "textos": {
-    "rodape": "MAUY Fitness",
-    "sobre": "",
-    "trocas": "",
-    "cookiesAtivo": true,
-    "cookies": ""
-  },
-  "freteEstados": [],
-  "integracoes": {
-    "pixTipo": "CPF/CNPJ",
-    "pix": "",
-    "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:"
-  },
-  "banners": [],
-  "galeria": [],
-  "cupons": [],
-  "seo": {
-    "paginas": [],
-    "og": {
-      "titulo": "",
-      "desc": "",
-      "imagem": ""
-    }
+ "nome": "MAUY",
+ "whatsapp": "5547992708359",
+ "frase": "Força em cada detalhe",
+ "pix": 5,
+ "parcelas": 3,
+ "bannerSegundos": 6,
+ "frete": {
+  "gratisAcima": 400,
+  "postagem": 2,
+  "base": 24.9
+ },
+ "freteEstados": [],
+ "cupons": [
+  {
+   "codigo": "MAUY10",
+   "tipo": "percentual",
+   "valor": 10,
+   "minimo": 0,
+   "limiteCpf": 0,
+   "validade": "",
+   "ativo": true
   }
+ ],
+ "tema": {
+  "wine": "#59283B",
+  "nude": "#C5A99A"
+ },
+ "marca": {
+  "logoClaro": "",
+  "logoEscuro": "",
+  "favicon": "",
+  "cor1": "#59283B",
+  "cor2": "#C5A99A",
+  "fonte": "Poppins"
+ },
+ "avisos": {
+  "ativo": true,
+  "texto": "Frete grátis acima de R$ 400 · 3x sem juros",
+  "cor": "#59283B",
+  "segundos": 5,
+  "mensagens": "Frete grátis acima de R$ 400  ·  3x sem juros\nNova coleção disponível  ·  Confira\nPrimeira compra? Use o cupom  MAUY10"
+ },
+ "textos": {
+  "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
+  "sobre": "",
+  "cookiesAtivo": true,
+  "cookies": "Usamos cookies para melhorar sua experiência e medir o uso da loja."
+ },
+ "razaoSocial": "",
+ "cnpj": "",
+ "endereco": "",
+ "linkTrocas": "",
+ "linkPrivacidade": "",
+ "banners": [
+  {
+   "ativo": true,
+   "desktop": "",
+   "mobile": "",
+   "titulo": "Design que vai além do treino.",
+   "sub": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+   "link": "#loja",
+   "cta": "Descobrir a coleção",
+   "corCta": "#59283B"
+  },
+  {
+   "ativo": true,
+   "desktop": "",
+   "mobile": "",
+   "titulo": "Força em cada detalhe.",
+   "sub": "Tecidos de toque suave, costuras planas e caimento que acompanha o movimento.",
+   "link": "#loja",
+   "cta": "Ver novidades",
+   "corCta": "#59283B"
+  }
+ ],
+ "galeria": [],
+ "layout": [
+  {
+   "id": "sec-ban001",
+   "tipo": "banner",
+   "ativo": true
+  },
+  {
+   "id": "sec-ben001",
+   "tipo": "beneficios",
+   "ativo": true,
+   "conteudo": "Frete grátis acima de R$ 400\n3x sem juros\n5% de desconto no Pix"
+  },
+  {
+   "id": "sec-prd001",
+   "tipo": "produtos",
+   "ativo": true,
+   "titulo": "A coleção",
+   "quantidade": 0
+  }
+ ]
 }
