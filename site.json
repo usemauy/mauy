@@ -1,225 +1,98 @@
 {
  "nome": "MAUY",
  "whatsapp": "5547992708359",
+ "frase": "Força em cada detalhe",
+ "pix": 5,
+ "parcelas": 3,
+ "bannerSegundos": 6,
+ "frete": {
+  "gratisAcima": 400,
+  "postagem": 2,
+  "base": 24.9
+ },
+ "freteEstados": [],
  "cupons": [
   {
    "codigo": "MAUY10",
-   "descricao": "10% de desconto na primeira compra",
    "tipo": "percentual",
    "valor": 10,
-   "minimo": 50,
-   "soSemPromo": false,
-   "ativo": true,
+   "minimo": 0,
    "limiteCpf": 0,
-   "validade": ""
-  },
-  {
-   "codigo": "FRETE20",
-   "descricao": "R$ 20 de desconto em compras acima de R$ 150",
-   "tipo": "fixo",
-   "valor": 20,
-   "minimo": 150,
-   "soSemPromo": false,
-   "ativo": true,
-   "limiteCpf": 0,
-   "validade": ""
+   "validade": "",
+   "ativo": true
   }
  ],
- "instagram": "",
- "horario": "",
- "msgPadrao": "Olá! Vim pelo site da MAUY.",
- "msgNovidades": "Olá! Gostaria de receber as novidades e promoções da MAUY! 😀",
  "tema": {
   "wine": "#59283B",
-  "sand": "#F5F1EB",
-  "nude": "#C5A99A",
-  "ink": "#29292B",
-  "cores": {
-   "fundo": "#F5F1EB",
-   "cartao": "#ECE5DB",
-   "texto": "#29292B",
-   "suave": "#6B6468",
-   "linha": "#E3D9CE",
-   "destaque": "#59283B",
-   "destaqueTexto": "#F5F1EB",
-   "botao": "#59283B",
-   "botaoTexto": "#F5F1EB"
-  },
-  "escuro": {
-   "modo": "claro"
-  },
-  "fontes": {
-   "titulo": "Poppins",
-   "texto": "Poppins",
-   "tamanhoBase": 15
-  },
-  "layout": {
-   "proporcao": "3/4",
-   "colunasMobile": 2,
-   "colunasDesktop": 4
-  }
- },
- "banners": [
-  {
-   "ativo": true,
-   "desktop": "img/site/banners-0-desktop-ssinowit3.jpg",
-   "mobile": "img/site/banners-0-mobile-p9t5ey1e3v.jpg",
-   "titulo": "NOVA COLEÇÃO ",
-   "sub": "",
-   "link": "",
-   "cta": "Comprar agora",
-   "corCta": "#59283B"
-  }
- ],
- "destaques": {
-  "titulo": "Em destaque",
-  "quantidade": 8
- },
- "novidades": {
-  "eyebrow": "Lista de novidades",
-  "titulo": "Quer saber primeiro quando chegar novidade?",
-  "texto": "Cadastre-se para receber lançamentos e condições especiais da MAUY.",
-  "botao": "Quero fazer parte",
-  "ok": "Obrigada! Seu cadastro segue pelo WhatsApp — é só enviar a mensagem."
- },
- "frete": {
-  "gratisAcima": 399.9,
-  "postagem": 5,
-  "base": 24.9,
-  "ativo": true,
-  "retirada": {
-   "ativo": true,
-   "texto": "Retirar na loja (combinar pelo WhatsApp)"
-  },
-  "regras": [
-   {
-    "nome": "Santa Catarina",
-    "cep": [
-     "88000-000 a 89999-999"
-    ],
-    "valor": 18.9,
-    "prazo": "3 a 5 dias úteis"
-   },
-   {
-    "nome": "Demais regiões",
-    "cep": [
-     "01000-000 a 87999-999",
-     "90000-000 a 99999-999"
-    ],
-    "valor": 44.9,
-    "prazo": "7 a 12 dias úteis"
-   }
-  ]
+  "nude": "#C5A99A"
  },
  "marca": {
-  "logoClaro": "img/site/marca-logoclaro-ocxrfeeua.svg",
-  "logoEscuro": "img/site/marca-logoescuro-1n5jmqpeua.svg",
-  "favicon": "img/site/marca-favicon-2gics48m.svg",
+  "logoClaro": "",
+  "logoEscuro": "",
+  "favicon": "",
   "cor1": "#59283B",
   "cor2": "#C5A99A",
   "fonte": "Poppins"
  },
  "avisos": {
   "ativo": true,
-  "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
+  "texto": "Frete grátis acima de R$ 400 · 3x sem juros",
   "cor": "#59283B",
   "segundos": 5,
-  "mensagens": "Frete grátis acima de R$ 299,9  ·  3x sem juros\nNova coleção disponível  ·  Confira\nPrimeira compra? Use o cupom  MAUY10",
-  "itens": [
-   {
-    "texto": "Frete grátis acima de R$ 399,90 · 3x sem juros",
-    "link": "",
-    "ativo": true,
-    "inicio": "",
-    "fim": ""
-   }
-  ],
-  "intervalo": 5
+  "mensagens": "Frete grátis acima de R$ 400  ·  3x sem juros\nNova coleção disponível  ·  Confira\nPrimeira compra? Use o cupom  MAUY10"
  },
  "textos": {
-  "rodape": "MAUY Fitness · Moda fitness para o dia a dia.",
-  "sobre": "A MAUY é uma marca de activewear de linhas essenciais, pensada para acompanhar você do treino à vida real.",
-  "trocas": "Arrependimento: 7 dias corridos após o recebimento, com frete de ida e volta pago pela MAUY.\nDefeito ou erro de envio: 30 dias, sem custo para você.\nTroca por motivo pessoal após 7 dias: frete por conta do cliente.\nEntrega não concluída: reenvio com novo frete ou cancelamento com estorno menos o frete original.\nA peça deve estar sem uso, com etiqueta e embalagem original.",
+  "rodape": "Moda fitness para sair da academia e ir à reunião, ao café, ao encontro.",
+  "sobre": "",
   "cookiesAtivo": true,
-  "cookies": "Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com nossa Política de Privacidade (LGPD)."
+  "cookies": "Usamos cookies para melhorar sua experiência e medir o uso da loja."
  },
- "freteEstados": [
+ "razaoSocial": "",
+ "cnpj": "",
+ "endereco": "",
+ "linkTrocas": "",
+ "linkPrivacidade": "",
+ "banners": [
   {
-   "uf": "SC",
-   "valor": 299.9,
-   "prazo": 2
-  }
- ],
- "integracoes": {
-  "pixTipo": "CPF/CNPJ",
-  "pix": "60125410077",
-  "whatsappMsg": "Olá! Gostaria de finalizar meu pedido:"
- },
- "seo": {
-  "paginas": [
-   {
-    "pagina": "Home",
-    "slug": "/",
-    "title": "MAUY | Moda fitness para o dia a dia",
-    "desc": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real. Conheça a coleção MAUY e compre online."
-   },
-   {
-    "pagina": "Moda feminina",
-    "slug": "/feminina",
-    "title": "Moda fitness feminina | MAUY",
-    "desc": "Texturas, conforto e formas que valorizam cada movimento. Descubra a coleção feminina da MAUY."
-   },
-   {
-    "pagina": "Acessórios",
-    "slug": "/acessorios",
-    "title": "Acessórios fitness | MAUY",
-    "desc": "Acessórios para completar o seu look de treino e do dia a dia. Confira a seleção da MAUY."
-   },
-   {
-    "pagina": "Moda masculina",
-    "slug": "/masculina",
-    "title": "Moda fitness masculina | MAUY",
-    "desc": "Moda fitness masculina para o treino e o dia a dia. Conheça as novidades da MAUY."
-   }
-  ],
-  "og": {
-   "titulo": "MAUY | Elegância em movimento",
-   "desc": "Activewear de linhas essenciais, do treino à vida real.",
-   "imagem": ""
-  }
- },
- "layout": [
-  {
-   "id": "sec-xditkp",
-   "tipo": "produtos",
    "ativo": true,
-   "titulo": "Carrossel de produtos em destaque",
-   "quantidade": 8
+   "desktop": "",
+   "mobile": "",
+   "titulo": "Design que vai além do treino.",
+   "sub": "Activewear de linhas essenciais, pensado para acompanhar você do treino à vida real.",
+   "link": "#loja",
+   "cta": "Descobrir a coleção",
+   "corCta": "#59283B"
   },
   {
-   "id": "sec-2mvnhh",
-   "tipo": "galeria",
    "ativo": true,
-   "titulo": "Acessórios ",
-   "fotos": [
-    {
-     "img": "img/site/layout-1-fotos-0-img-5hmkdt35w7.jpg",
-     "legenda": "Copo garrafa"
-    },
-    {
-     "img": "img/site/layout-1-fotos-1-img-13gdz6x311v.jpg",
-     "legenda": "Luvas"
-    }
-   ]
+   "desktop": "",
+   "mobile": "",
+   "titulo": "Força em cada detalhe.",
+   "sub": "Tecidos de toque suave, costuras planas e caimento que acompanha o movimento.",
+   "link": "#loja",
+   "cta": "Ver novidades",
+   "corCta": "#59283B"
   }
  ],
  "galeria": [],
- "carrossel": {
-  "intervalo": 6,
-  "transicao": "slide"
- },
- "pix": 5,
- "parcelas": 3,
- "bannerSegundos": 2,
- "tabelaMedidas": "P | 82-86 | 62-66 | 88-92\nM | 87-91 | 67-71 | 93-97\nG | 92-96 | 72-76 | 98-102\nGG | 97-101 | 77-81 | 103-107"
+ "layout": [
+  {
+   "id": "sec-ban001",
+   "tipo": "banner",
+   "ativo": true
+  },
+  {
+   "id": "sec-ben001",
+   "tipo": "beneficios",
+   "ativo": true,
+   "conteudo": "Frete grátis acima de R$ 400\n3x sem juros\n5% de desconto no Pix"
+  },
+  {
+   "id": "sec-prd001",
+   "tipo": "produtos",
+   "ativo": true,
+   "titulo": "A coleção",
+   "quantidade": 0
+  }
+ ]
 }
